@@ -5,7 +5,7 @@ Create an iOS application using the HTTPSwiftExample that:
 - Collects some form of low throughput (sampling rate > 1s) feature data for processing: audio, video, motion, or from the micro-controller
 - Uploads labeled feature data to a server via HTTP POST requests
 	- you can run the server from your laptop or mac mini
-	- Alternatively you can use a virtual machine, AWS, or other cloud service
+	- alternatively you can use a virtual machine, AWS, or other cloud service
 - Trains a model from the labeled data (e.g., KNN, SVM, Random Forest, etc.)
 - Requests predictions from the server by uploading unknown feature vectors 
 	- can be periodically or initiated by user
