@@ -62,8 +62,8 @@
 				B6355BE7237BB05A00B9C518 /* Main.storyboard */,
 				B6355BE1237BB05A00B9C518 /* AppDelegate.swift */,
 				B667821C237BD0B40068D38E /* HomeViewController.swift */,
-				B6678220237BE5D80068D38E /* ChessScene.swift */,
 				B6678222237BE67B0068D38E /* ChessViewController.swift */,
+				B6678220237BE5D80068D38E /* ChessScene.swift */,
 				B6355BEF237BB05B00B9C518 /* Info.plist */,
 				B6355BEA237BB05B00B9C518 /* Assets.xcassets */,
 			);

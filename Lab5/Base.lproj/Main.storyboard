@@ -16,12 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnb-O4-MUa">
-                                <rect key="frame" x="184" y="144" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCW-IO-lHo">
-                                <rect key="frame" x="184" y="274" width="46" height="30"/>
+                                <rect key="frame" x="184" y="433" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <segue destination="KjK-On-vQt" kind="show" id="KIy-D8-hLm"/>
@@ -30,10 +26,8 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="pCW-IO-lHo" firstAttribute="top" secondItem="jnb-O4-MUa" secondAttribute="bottom" constant="100" id="9NW-aI-6Nf"/>
-                            <constraint firstItem="jnb-O4-MUa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GOW-H6-opz"/>
-                            <constraint firstItem="pCW-IO-lHo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UAR-gg-2RQ"/>
-                            <constraint firstItem="jnb-O4-MUa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="qEr-sd-cZB"/>
+                            <constraint firstItem="pCW-IO-lHo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ojx-FE-Iyp"/>
+                            <constraint firstItem="pCW-IO-lHo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ret-j1-Spj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
