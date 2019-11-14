@@ -14,6 +14,7 @@
 		B667821D237BD0B40068D38E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B667821C237BD0B40068D38E /* HomeViewController.swift */; };
 		B6678221237BE5D80068D38E /* ChessScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6678220237BE5D80068D38E /* ChessScene.swift */; };
 		B6678223237BE67B0068D38E /* ChessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6678222237BE67B0068D38E /* ChessViewController.swift */; };
+		B6EAA545237CE1CD00E309AE /* ChessSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EAA544237CE1CC00E309AE /* ChessSquare.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B667821C237BD0B40068D38E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B6678220237BE5D80068D38E /* ChessScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessScene.swift; sourceTree = "<group>"; };
 		B6678222237BE67B0068D38E /* ChessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessViewController.swift; sourceTree = "<group>"; };
+		B6EAA544237CE1CC00E309AE /* ChessSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessSquare.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				B667821C237BD0B40068D38E /* HomeViewController.swift */,
 				B6678222237BE67B0068D38E /* ChessViewController.swift */,
 				B6678220237BE5D80068D38E /* ChessScene.swift */,
+				B6EAA544237CE1CC00E309AE /* ChessSquare.swift */,
 				B6355BEF237BB05B00B9C518 /* Info.plist */,
 				B6355BEA237BB05B00B9C518 /* Assets.xcassets */,
 			);
@@ -145,6 +148,7 @@
 				B6355BE2237BB05A00B9C518 /* AppDelegate.swift in Sources */,
 				B667821D237BD0B40068D38E /* HomeViewController.swift in Sources */,
 				B6678221237BE5D80068D38E /* ChessScene.swift in Sources */,
+				B6EAA545237CE1CD00E309AE /* ChessSquare.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
