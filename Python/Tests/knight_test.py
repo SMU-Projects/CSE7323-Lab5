@@ -112,4 +112,4 @@ accurate = True
 for i in range(len(true_values)):
     if true_values[i] != test_values[i]:
         accurate = False
-        print('Error Move', i+1,'--- truth:', true_values[i], '||| test:',test_values[i])
+        print('Error Move', i+1, '--- truth:', true_values[i], '||| test:', test_values[i])

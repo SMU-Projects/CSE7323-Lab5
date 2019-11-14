@@ -52,20 +52,20 @@ class King(PIECE.Piece):
         attacking_coordinates.append([self.row, self.col-1])  # Move King Left
         attacking_coordinates.append([self.row, self.col+1])  # Move King Left
 
-        # Castling ########## TODO: Check for Check in King Passing Squares
-        if self.turn_last_moved == 0: # The following routes are the passing squares, and then ending square
-            # White's King Side Castle
-            if self.color == 'white' and board[7][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
-                routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
-            # White's Queen Side Castle
-            if self.color == 'white' and board[7][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
-                routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
-            # Black's King Side Castle
-            if self.color == 'black' and board[0][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
-                routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
-            # Black's Queen Side Castle
-            if self.color == 'black' and board[0][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
-                routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
+        # # Castling ########## TODO: Check for Check in King Passing Squares
+        # if self.turn_last_moved == 0: # The following routes are the passing squares, and then ending square
+        #     # White's King Side Castle
+        #     if self.color == 'white' and board[7][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
+        #         routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
+        #     # White's Queen Side Castle
+        #     if self.color == 'white' and board[7][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
+        #         routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
+        #     # Black's King Side Castle
+        #     if self.color == 'black' and board[0][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
+        #         routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
+        #     # Black's Queen Side Castle
+        #     if self.color == 'black' and board[0][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
+        #         routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
 
         for coordinate in reversed(attacking_coordinates):
             r = coordinate[0]

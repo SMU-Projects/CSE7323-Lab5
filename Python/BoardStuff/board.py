@@ -115,7 +115,10 @@ class Board:
             #         self.grid[row2][col2 - 2].piece = PIECE.Piece()
             # self.move_count += 1
 
-            end_square.set_piece(start_square.piece)
+            if response['is_queening']:
+                end_square.set_piece(QUEEN.Queen(color))
+            else:
+                end_square.set_piece(start_square.piece) # TODO: This will need to flag for captured piece when determining draw
             end_square.piece.update_turn_last_moved(self.move_count)
             start_square.set_piece(PIECE.Piece())
             self.move_count += 1
@@ -156,10 +159,20 @@ class Board:
         # Check to see if move is found in the available coordinates
         attack_coordinate = [row2, col2]
         for coordinate in available_coordinates:
+            if len(coordinate) != 2:
+                if coordinate[-1] == 'is_castling':
+                    response["is_castling"] = True
+                if coordinate[-1] == 'is_en_passant':
+                    response["is_en_passant"] = True
+                if coordinate[-1] == 'is_queening':
+                    response["is_queening"] = True
+                coordinate.pop(-1)
+            else:
+                response["is_castling"] = False
+                response["is_en_passant"] = False
+                response["is_queening"] = False
+
             if attack_coordinate == coordinate:
-                # response["isEnPassant"] = move.isEnPassant
-                # response["isCastling"] = move.isCastling
-                # response["isQueening"] = move.isQueening
                 response["valid"] = True
         return response
 

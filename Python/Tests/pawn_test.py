@@ -53,34 +53,16 @@ b_test.set_piece(PAWN.Pawn(black), 'G', 3)
 true_values = []
 test_values = []
 
-# print('Starting Position')
-# b_test.print_board()
-
-# print(True)
 test_values.append(b_test.move_piece(white, 'E', 2, 'E', 4))  # Move 1
 true_values.append(True)
-# b_test.print_board()
-
-# print(False)
 test_values.append(b_test.move_piece(white, 'E', 7, 'E', 5))  # Move 2
 true_values.append(False)
-# b_test.print_board()
-
-# print(True)
 test_values.append(b_test.move_piece(black, 'E', 7, 'E', 5))  # Move 3
 true_values.append(True)
-# b_test.print_board()
-
-# print(False)
 test_values.append(b_test.move_piece(white, 'E', 4, 'E', 5))  # Move 4
 true_values.append(False)
-# b_test.print_board()
-
-# print(False)
 test_values.append(b_test.move_piece(black, 'D', 2, 'D', 4))  # Move 5
 true_values.append(False)
-# b_test.print_board()
-
 test_values.append(b_test.move_piece(white, 'D', 2, 'D', 4))  # Move 6
 true_values.append(True)
 test_values.append(b_test.move_piece(black, 'E', 5, 'D', 4))  # Move 7
@@ -91,57 +73,61 @@ test_values.append(b_test.move_piece(black, 'D', 4, 'C', 3))  # Move 9
 true_values.append(True)
 test_values.append(b_test.move_piece(white, 'H', 2, 'H', 4))  # Move 10
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'C', 3, 'B', 2))  # Move 12
+test_values.append(b_test.move_piece(black, 'C', 3, 'B', 2))  # Move 11
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'F', 2, 'F', 3))  # Move 13
+test_values.append(b_test.move_piece(white, 'F', 2, 'F', 3))  # Move 12
 true_values.append(False)
-test_values.append(b_test.move_piece(white, 'F', 2, 'F', 4))  # Move 14
+test_values.append(b_test.move_piece(white, 'F', 2, 'F', 4))  # Move 13
 true_values.append(False)
-test_values.append(b_test.move_piece(white, 'G', 2, 'G', 4))  # Move 15
+test_values.append(b_test.move_piece(white, 'G', 2, 'G', 4))  # Move 14
 true_values.append(False)
-test_values.append(b_test.move_piece(white, 'G', 2, 'F', 3))  # Move 16
+test_values.append(b_test.move_piece(white, 'G', 2, 'F', 3))  # Move 15
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'F', 3, 'E', 4))  # Move 17
+test_values.append(b_test.move_piece(white, 'F', 3, 'E', 4))  # Move 16
 true_values.append(False)
-test_values.append(b_test.move_piece(white, 'E', 4, 'D', 5))  # Move 18
+test_values.append(b_test.move_piece(white, 'E', 4, 'D', 5))  # Move 17
 true_values.append(False)
-test_values.append(b_test.move_piece(white, 'E', 4, 'E', 6))  # Move 19
+test_values.append(b_test.move_piece(white, 'E', 4, 'E', 6))  # Move 18
 true_values.append(False)
-test_values.append(b_test.move_piece(black, 'A', 7, 'A', 8))  # Move 20
+test_values.append(b_test.move_piece(black, 'A', 7, 'A', 8))  # Move 19
 true_values.append(False)
-test_values.append(b_test.move_piece(black, 'A', 7, 'A', 5))  # Move 21
+test_values.append(b_test.move_piece(black, 'A', 7, 'A', 5))  # Move 20
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'C', 5, 'A', 8))  # Move 22
+test_values.append(b_test.move_piece(white, 'C', 5, 'A', 8))  # Move 21
 true_values.append(False)
-test_values.append(b_test.move_piece(white, 'F', 2, 'G', 3))  # Move 23
+test_values.append(b_test.move_piece(white, 'F', 2, 'G', 3))  # Move 22
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'G', 3, 'F', 4))  # Move 24
+test_values.append(b_test.move_piece(white, 'G', 3, 'F', 4))  # Move 23
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'F', 4, 'F', 6))  # Move 25
+test_values.append(b_test.move_piece(white, 'F', 4, 'F', 6))  # Move 24
 true_values.append(False)
 
 # En Passant Test for White
-test_values.append(b_test.move_piece(white, 'E', 4, 'E', 5))  # Move 26
+test_values.append(b_test.move_piece(white, 'E', 4, 'E', 5))  # Move 25
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'F', 4, 'F', 5))  # Move 27
+test_values.append(b_test.move_piece(white, 'F', 4, 'F', 5))  # Move 26
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'D', 7, 'D', 5))  # Move 28
+test_values.append(b_test.move_piece(black, 'D', 7, 'D', 5))  # Move 27
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'E', 5, 'D', 6))  # Move 29 En Passant
+test_values.append(b_test.move_piece(white, 'E', 5, 'D', 6))  # Move 28 En Passant
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'G', 7, 'G', 5))  # Move 30
+test_values.append(b_test.move_piece(black, 'G', 7, 'G', 5))  # Move 29
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'F', 5, 'G', 6))  # Move 31 En Passant
+test_values.append(b_test.move_piece(white, 'F', 5, 'G', 6))  # Move 30 En Passant
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'B', 7, 'B', 5))  # Move 32
+test_values.append(b_test.move_piece(black, 'B', 7, 'B', 5))  # Move 31
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'B', 5, 'B', 4))  # Move 33
+test_values.append(b_test.move_piece(black, 'B', 5, 'B', 4))  # Move 32
 true_values.append(True)
-test_values.append(b_test.move_piece(white, 'A', 2, 'A', 4))  # Move 34
+test_values.append(b_test.move_piece(white, 'A', 2, 'A', 4))  # Move 33
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'B', 4, 'A', 3))  # Move 35
+test_values.append(b_test.move_piece(black, 'B', 4, 'A', 3))  # Move 34
 true_values.append(True)
-test_values.append(b_test.move_piece(black, 'B', 2, 'B', 1))  # Move 36
+test_values.append(b_test.move_piece(black, 'B', 2, 'B', 1))  # Move 35
+true_values.append(True)
+test_values.append(b_test.move_piece(black, 'D', 5, 'D', 4))  # Move 36 En Passant Piece Removal
+true_values.append(False)
+test_values.append(b_test.move_piece(black, 'B', 1, 'H', 1))  # Move 37 Queening Piece
 true_values.append(True)
 
 print('-------------------- TRUE ---------------------\n')
@@ -154,4 +140,4 @@ accurate = True
 for i in range(len(true_values)):
     if true_values[i] != test_values[i]:
         accurate = False
-        print('Error Move', i+1,'--- truth:', true_values[i], '||| test:',test_values[i]['valid'])
+        print('Error Move', i+1, '--- truth:', true_values[i], '||| test:', test_values[i])
