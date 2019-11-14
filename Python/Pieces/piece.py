@@ -13,7 +13,8 @@ class Piece():
         self.name = 'null piece'
         self.symbol = '  '
         self.value = 0
-        self.requires_board_state = False
+        self.row = 0
+        self.col = 0
         self.turn_last_moved = 0
 
 
@@ -57,23 +58,44 @@ class Piece():
 
 
 
-    def get_available_squares(self, board):
+    def get_available_coordinates(self, board):
         """
-        Gets the available squares for this piece
+        Gets the available coordinates/squares for this piece
         :param board: The current state of the board
-        :return: A list of available squares
+        :return: A list of available coordinates/squares
         """
         pass
 
 
 
-    def get_attacking_squares(self, board):
+    def get_attacking_coordinates(self, board):
         """
-        Gets the attacking squares for this piece
+        Gets the attacking coordinates/squares for this piece
         :param board: The current state of the board
-        :return: A list of attacking squares
+        :return: A list of attacking coordinates/squares
         """
         pass
+
+
+
+    def is_move_blocked(self, board, row1, col1, row2, col2):
+        """
+        Checks to see if move path has an obstruction or is blocked
+        :param row1:
+        :param col1:
+        :param row2:
+        :param col2:
+        :return: bool Whether the move is blocked
+        """
+        pass
+        # blocked = False
+        # for coordinate in move.pass_coordinates:
+        #     r = coordinate[0]
+        #     c = coordinate[1]
+        #     pass_square = self.grid[r][c]
+        #     if pass_square.has_piece():
+        #         blocked = True
+        # return blocked
 
 
 
@@ -83,7 +105,6 @@ class Piece():
         :param turn_count: The last turn this piece was moved on
         """
         self.turn_last_moved = turn_count
-
 
 
 

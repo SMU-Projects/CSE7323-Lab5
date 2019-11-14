@@ -4,8 +4,8 @@ import square as SQUARE
 sys.path.append('../Pieces')
 import piece as PIECE
 # import pawn as PAWN
-import rook as ROOK
-# import knight as KNIGHT
+# import rook as ROOK
+import knight as KNIGHT
 # import bishop as BISHOP
 # import queen as QUEEN
 # import king as KING
@@ -51,15 +51,22 @@ class Board:
 
 
 
-    def set_piece(self, piece, chess_file, chess_rank):
+    def set_piece(self, piece, chess_file, chess_rank, debug=False):
         """
         Sets a piece on the Board
         :param piece: Piece to be set
         :param chess_file: File coordinate
         :param chess_rank: Rank coordinate
+        :param debug: if debug, chess_file = row; chess_rank = col
         """
-        row, col = self._convert_coordinates(chess_file, chess_rank)
+        if debug:
+            row = chess_file
+            col = chess_rank
+        else:
+            row, col = self._convert_coordinates(chess_file, chess_rank)
         square = self.grid[row][col]
+        piece.row = row
+        piece.col = col
         square.piece = piece
 
 
@@ -76,19 +83,19 @@ class Board:
     #         self.set_piece(PAWN.Pawn(white), self.alphabet[i], 2)
     #     for i in range(8):
     #         self.set_piece(PAWN.Pawn(black), self.alphabet[i], 7)
-
-        # Rooks
-        self.set_piece(ROOK.Rook(white), 'A', 1)
-        self.set_piece(ROOK.Rook(white), 'H', 1)
-        self.set_piece(ROOK.Rook(black), 'A', 8)
-        self.set_piece(ROOK.Rook(black), 'H', 8)
-
-    #     # Knights
-    #     self.set_piece(KNIGHT.Knight(white), 'B', 1)
-    #     self.set_piece(KNIGHT.Knight(white), 'G', 1)
-    #     self.set_piece(KNIGHT.Knight(black), 'B', 8)
-    #     self.set_piece(KNIGHT.Knight(black), 'G', 8)
     #
+    #     # Rooks
+    #     self.set_piece(ROOK.Rook(white), 'A', 1)
+    #     self.set_piece(ROOK.Rook(white), 'H', 1)
+    #     self.set_piece(ROOK.Rook(black), 'A', 8)
+    #     self.set_piece(ROOK.Rook(black), 'H', 8)
+
+        # Knights
+        self.set_piece(KNIGHT.Knight(white), 'B', 1)
+        self.set_piece(KNIGHT.Knight(white), 'G', 1)
+        self.set_piece(KNIGHT.Knight(black), 'B', 8)
+        self.set_piece(KNIGHT.Knight(black), 'G', 8)
+
     #     # Bishops
     #     self.set_piece(BISHOP.Bishop(white), 'C', 1)
     #     self.set_piece(BISHOP.Bishop(white), 'F', 1)
@@ -105,17 +112,25 @@ class Board:
 
 
 
-    def print_board(self):
+    def print_board(self, debug=False):
         """
         Prints a String visualization of the Board
+        :param debug: if debug, print board in debug mode
         """
         file_header = '      '
-        for i in range(8):
-            file_header += self.alphabet[i] + '    '
+        if debug:
+            for i in range(8):
+                file_header += str(i) + '    '
+        else:
+            for i in range(8):
+                file_header += self.alphabet[i] + '    '
         print(file_header)
         print('    -----------------------------------------')
         for r in range(len(self.grid)):
-            line = ' ' + str(len(self.grid) - r) + '  |'
+            if debug:
+                line = ' ' + str(r) + '  |'
+            else:
+                line = ' ' + str(len(self.grid) - r) + '  |'
             for c in range(len(self.grid[r])):
                 square = self.grid[r][c]
                 symbol = square.piece.symbol
@@ -129,14 +144,16 @@ class Board:
         print('\n')
 
 
+
 if __name__ == '__main__':
     white = 'white'
     black = 'black'
 
     b = Board()
     b.print_board()
-    # b.set_standard_board()
-    # b.print_board()
+    b.print_board(True)
+    b.set_standard_board()
+    b.print_board()
     # print("Viable White Pawn Move:", b.move_piece(white, 'A', 2, 'A', 4))
     # print("Viable Black Pawn Move:", b.move_piece(black, 'B', 7, 'B', 5))
     # b.print_board()
