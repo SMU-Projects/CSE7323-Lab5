@@ -64,43 +64,43 @@ class ChessScene: SKScene {
     func setBoard() {
         // Pawns
         for i in 0...7 {
-            setPiece(pieceName: "black_pawn.png", piecePosition: self.gridPoints[6][i])
+            setPiece(pieceName: "black_pawn.png", pieceSquare: self.gridPoints[6][i])
         }
         for i in 0...7 {
-            setPiece(pieceName: "white_pawn.png", piecePosition: self.gridPoints[1][i])
+            setPiece(pieceName: "white_pawn.png", pieceSquare: self.gridPoints[1][i])
         }
         
         // Rooks
-        setPiece(pieceName: "black_rook.png", piecePosition: self.gridPoints[7][0])
-        setPiece(pieceName: "black_rook.png", piecePosition: self.gridPoints[7][7])
-        setPiece(pieceName: "white_rook.png", piecePosition: self.gridPoints[0][0])
-        setPiece(pieceName: "white_rook.png", piecePosition: self.gridPoints[0][7])
+        setPiece(pieceName: "black_rook.png", pieceSquare: self.gridPoints[7][0])
+        setPiece(pieceName: "black_rook.png", pieceSquare: self.gridPoints[7][7])
+        setPiece(pieceName: "white_rook.png", pieceSquare: self.gridPoints[0][0])
+        setPiece(pieceName: "white_rook.png", pieceSquare: self.gridPoints[0][7])
         
         // Knights
-        setPiece(pieceName: "black_knight.png", piecePosition: self.gridPoints[7][1])
-        setPiece(pieceName: "black_knight.png", piecePosition: self.gridPoints[7][6])
-        setPiece(pieceName: "white_knight.png", piecePosition: self.gridPoints[0][1])
-        setPiece(pieceName: "white_knight.png", piecePosition: self.gridPoints[0][6])
+        setPiece(pieceName: "black_knight.png", pieceSquare: self.gridPoints[7][1])
+        setPiece(pieceName: "black_knight.png", pieceSquare: self.gridPoints[7][6])
+        setPiece(pieceName: "white_knight.png", pieceSquare: self.gridPoints[0][1])
+        setPiece(pieceName: "white_knight.png", pieceSquare: self.gridPoints[0][6])
         
         // Bishops
-        setPiece(pieceName: "black_bishop.png", piecePosition: self.gridPoints[7][2])
-        setPiece(pieceName: "black_bishop.png", piecePosition: self.gridPoints[7][5])
-        setPiece(pieceName: "white_bishop.png", piecePosition: self.gridPoints[0][2])
-        setPiece(pieceName: "white_bishop.png", piecePosition: self.gridPoints[0][5])
+        setPiece(pieceName: "black_bishop.png", pieceSquare: self.gridPoints[7][2])
+        setPiece(pieceName: "black_bishop.png", pieceSquare: self.gridPoints[7][5])
+        setPiece(pieceName: "white_bishop.png", pieceSquare: self.gridPoints[0][2])
+        setPiece(pieceName: "white_bishop.png", pieceSquare: self.gridPoints[0][5])
         
         // Queens
-        setPiece(pieceName: "black_queen.png", piecePosition: self.gridPoints[7][3])
-        setPiece(pieceName: "white_queen.png", piecePosition: self.gridPoints[0][3])
+        setPiece(pieceName: "black_queen.png", pieceSquare: self.gridPoints[7][3])
+        setPiece(pieceName: "white_queen.png", pieceSquare: self.gridPoints[0][3])
 
         // Kings
-        setPiece(pieceName: "black_king.png", piecePosition: self.gridPoints[7][4])
-        setPiece(pieceName: "white_king.png", piecePosition: self.gridPoints[0][4])
+        setPiece(pieceName: "black_king.png", pieceSquare: self.gridPoints[7][4])
+        setPiece(pieceName: "white_king.png", pieceSquare: self.gridPoints[0][4])
     }
     
-    func setPiece(pieceName: String, piecePosition: (Double, Double)) {
+    func setPiece(pieceName: String, pieceSquare: (Double, Double)) {
         let piece = SKSpriteNode(imageNamed: pieceName)
         piece.size = CGSize(width: size.width * self.pieceWidth, height: size.height * self.pieceHeight)
-        piece.position = CGPoint(x: size.width * CGFloat(piecePosition.0), y: size.height * CGFloat(piecePosition.1))
+        piece.position = CGPoint(x: size.width * CGFloat(pieceSquare.0), y: size.height * CGFloat(pieceSquare.1))
         piece.zPosition = 2
         self.addChild(piece)
     }
