@@ -53,7 +53,7 @@ accurate = True
 for i in range(len(true_values)):
     if true_values[i] != test_values[i]:
         accurate = False
-        print('Error Move', i+1,'--- truth:', true_values[i], '||| test:',test_values[i])
+        print('Error Move', i+1, '--- truth:', true_values[i], '||| test:', test_values[i])
 
 ################################################################################
 ############################### Castling Test 2 ################################
@@ -102,7 +102,7 @@ accurate = True
 for i in range(len(true_values)):
     if true_values[i] != test_values[i]:
         accurate = False
-        print('Error Move', i+1,'--- truth:', true_values[i], '||| test:',test_values[i])
+        print('Error Move', i+1, '--- truth:', true_values[i], '||| test:', test_values[i])
 
 ################################################################################
 ############################### Castling Test 3 ################################
@@ -131,17 +131,18 @@ b_test.set_piece(ROOK.Rook(black), 'A', 8)
 b_test.set_piece(ROOK.Rook(white), 'H', 1)
 b_test.set_piece(ROOK.Rook(white), 'A', 1)
 # white king has already moved
-b_test.grid[7][4].piece.turn_last_moved = 10
+b_test.grid[7][4].piece.update_turn_last_moved(10)
 # black rooks have already moved
-b_test.grid[0][0].piece.turn_last_moved = 10
+b_test.grid[0][0].piece.update_turn_last_moved(10)
 # white king has already moved
-b_test.grid[0][7].piece.turn_last_moved = 10
+b_test.grid[0][7].piece.update_turn_last_moved(10)
 
 # Test
 true_values = []
 test_values = []
 
 # Movement Test for Castling
+b_test.print_board()
 test_values.append(b_test.move_piece(white, 'E', 1, 'C', 1))  # Move 1
 true_values.append(False)
 test_values.append(b_test.move_piece(black, 'E', 8, 'G', 8))  # Move 2
@@ -157,13 +158,13 @@ accurate = True
 for i in range(len(true_values)):
     if true_values[i] != test_values[i]:
         accurate = False
-        print('Error Move', i+1,'--- truth:', true_values[i], '||| test:',test_values[i])
+        print('Error Move', i+1, '--- truth:', true_values[i], '||| test:', test_values[i])
 
 ################################################################################
 ############################### Castling Test 4 ################################
 ################################################################################
 
-# Copy previous castling test, check for castling through check
+
 
 ################################################################################
 ############################# General King Test 5 ##############################
