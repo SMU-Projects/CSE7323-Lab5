@@ -58,21 +58,21 @@ class Pawn(PIECE.Piece):
         if self.color == 'white' and self.row == 3: # This is hardcoded to be the 5 rank
             if self.col-1 >= 0:
                 square = board.grid[self.row][self.col-1]
-                if square.piece.color == 'black' and (square.piece._turn_last_moved == board.move_count-1):
+                if square.piece.color == 'black' and (square.piece._turn_last_moved == board.turn_count-1):
                     available_coordinates.append([self.row + self.pawn_direction, self.col-1, "is_en_passant"])
             if self.col+1 < board.width:
                 square = board.grid[self.row][self.col+1]
-                if square.piece.color == 'black' and (square.piece._turn_last_moved == board.move_count-1):
+                if square.piece.color == 'black' and (square.piece._turn_last_moved == board.turn_count-1):
                     available_coordinates.append([self.row + self.pawn_direction, self.col+1, "is_en_passant"])
 
         if self.color == 'black' and self.row == 4: # This is hardcoded to be the 4 rank
             if self.col-1 >= 0:
                 square = board.grid[self.row][self.col-1]
-                if square.piece.color == 'white' and (square.piece._turn_last_moved == board.move_count-1):
+                if square.piece.color == 'white' and (square.piece._turn_last_moved == board.turn_count-1):
                     available_coordinates.append([self.row + self.pawn_direction, self.col-1, "is_en_passant"])
             if self.col+1 < board.width:
                 square = board.grid[self.row][self.col+1]
-                if square.piece.color == 'white' and (square.piece._turn_last_moved == board.move_count-1):
+                if square.piece.color == 'white' and (square.piece._turn_last_moved == board.turn_count-1):
                     available_coordinates.append([self.row + self.pawn_direction, self.col+1, "is_en_passant"])
 
         for coordinate in reversed(available_coordinates):

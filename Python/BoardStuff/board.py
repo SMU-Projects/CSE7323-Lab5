@@ -3,12 +3,12 @@ import square as SQUARE
 
 sys.path.append('../Pieces')
 import piece as PIECE
-# import pawn as PAWN
+import pawn as PAWN
 import rook as ROOK
 import knight as KNIGHT
 import bishop as BISHOP
 import queen as QUEEN
-# import king as KING
+import king as KING
 
 class Board:
 
@@ -22,7 +22,7 @@ class Board:
         self.grid = [[SQUARE.Square(r, c) for c in range(self.width)] for r in range(self.height)]
         self.history = []
 
-        self.move_count = 1 # Todo: move variable into Chess Class
+        self.turn_count = 1 # Todo: move variable into Chess Class
 
 
 
@@ -95,33 +95,25 @@ class Board:
             # Add the previous position to history
             self.history.append(self._copy_board()) ######## TODO: This will need to be changed later on
 
-            # # Swap pieces
-            # if response['isQueening']:
-            #     end_square.piece = QUEEN.Queen(color)
-            # else:
-            #     end_square.piece = start_square.piece ######## TODO:This will need to flag for captured piece when determining draw
-            # end_square.piece.turn_last_moved = self.move_count
-            # if response["isEnPassant"]:
-            #     self.grid[row1][col2].piece = PIECE.Piece()
-            # start_square.piece = PIECE.Piece()
-            # if response["isCastling"]:
-            #     if col2 - col1 > 0: # King Side Castle
-            #         self.grid[row2][col2 - 1].piece = self.grid[row2][col2 + 1].piece
-            #         self.grid[row2][col2 - 1].piece.turn_last_moved = self.move_count
-            #         self.grid[row2][col2 + 1].piece = PIECE.Piece()
-            #     else: # Queen Side Castle
-            #         self.grid[row2][col2 + 1].piece = self.grid[row2][col2 - 2].piece
-            #         self.grid[row2][col2 + 1].piece.turn_last_moved = self.move_count
-            #         self.grid[row2][col2 - 2].piece = PIECE.Piece()
-            # self.move_count += 1
-
             if response['is_queening']:
                 end_square.set_piece(QUEEN.Queen(color))
             else:
                 end_square.set_piece(start_square.piece) # TODO: This will need to flag for captured piece when determining draw
-            end_square.piece.update_turn_last_moved(self.move_count)
+            end_square.piece.update_turn_last_moved(self.turn_count)
+            if response["is_en_passant"]:
+                self.grid[row1][col2].set_piece(PIECE.Piece())
             start_square.set_piece(PIECE.Piece())
-            self.move_count += 1
+
+            if response["is_castling"]:
+                if col2 - col1 > 0: # King Side Castle
+                    self.grid[row2][col2 - 1].piece = self.grid[row2][col2 + 1].piece
+                    self.grid[row2][col2 - 1].piece.turn_last_moved = self.turn_count
+                    self.grid[row2][col2 + 1].piece = PIECE.Piece()
+                else: # Queen Side Castle
+                    self.grid[row2][col2 + 1].piece = self.grid[row2][col2 - 2].piece
+                    self.grid[row2][col2 + 1].piece.turn_last_moved = self.turn_count
+                    self.grid[row2][col2 - 2].piece = PIECE.Piece()
+            self.turn_count += 1
         return response["valid"]
 
     def _is_valid_move(self, color, row1, col1, row2, col2):
@@ -182,14 +174,14 @@ class Board:
         """
         Sets the Board with the standard Chess Opening
         """
-    #     white = 'white'
-    #     black = 'black'
-    #
-    #     # Pawn
-    #     for i in range(8):
-    #         self.set_piece(PAWN.Pawn(white), self.alphabet[i], 2)
-    #     for i in range(8):
-    #         self.set_piece(PAWN.Pawn(black), self.alphabet[i], 7)
+        white = 'white'
+        black = 'black'
+
+        # Pawn
+        for i in range(8):
+            self.set_piece(PAWN.Pawn(white), self.alphabet[i], 2)
+        for i in range(8):
+            self.set_piece(PAWN.Pawn(black), self.alphabet[i], 7)
 
         # Rooks
         self.set_piece(ROOK.Rook(white), 'A', 1)
@@ -213,9 +205,9 @@ class Board:
         self.set_piece(QUEEN.Queen(white), 'D', 1)
         self.set_piece(QUEEN.Queen(black), 'D', 8)
 
-        # # Kings
-        # self.set_piece(KING.King(white), 'E', 1)
-        # self.set_piece(KING.King(black), 'E', 8)
+        # Kings
+        self.set_piece(KING.King(white), 'E', 1)
+        self.set_piece(KING.King(black), 'E', 8)
 
 
 
@@ -242,11 +234,11 @@ class Board:
                 square = self.grid[r][c]
                 symbol = square.piece.symbol
                 line += ' ' + symbol + ' |'
-            if r != int((self.height-1)/2) or self.move_count is None:
+            if r != int((self.height-1)/2) or self.turn_count is None:
                 print(line)
             else:
                 print(line, end='')
-                print('      Move: ' + str(self.move_count))
+                print('      Move: ' + str(self.turn_count))
             print('    -----------------------------------------')
         print('\n')
 
