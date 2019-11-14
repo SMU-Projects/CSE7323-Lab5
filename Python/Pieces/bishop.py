@@ -6,15 +6,47 @@ import board as BOARD
 import square as SQUARE
 
 
-# Rook Object
-class Rook(PIECE.Piece):
+# Bishop Object
+class Bishop(PIECE.Piece):
 
     def __init__(self, color):
         """
-        Define Rook Class Variables
+        Define Bishop Class Variables
         """
         super()
-        self._declare_variables(color=color, name='Rook', symbol_char='r', value=5)
+        self._declare_variables(color=color, name='Bishop', symbol_char='b', value=3)
+
+
+
+    @staticmethod
+    def _get_diagonal_route(r, c, up, left, board_height=8, board_width=8):
+        """
+        Gets the specified diagonal route stemming from a given row or col
+        :param r: row position
+        :param c: col position
+        :param up: bool Whether if up or down
+        :param left: bool Whether if left or right
+        :param board_height: height of board
+        :param board_width: width of board
+        :return: route of diagonal move
+        """
+        route = []
+        if up:
+            r_direction = -1
+        else:
+            r_direction = 1
+        if left:
+            c_direction = -1
+        else:
+            c_direction = 1
+        r += r_direction
+        c += c_direction
+        while r >= 0 and c >= 0 and r < board_height and c < board_width:
+            route.append([r, c])
+            r += r_direction
+            c += c_direction
+        return route
+
 
 
 
@@ -43,41 +75,37 @@ class Rook(PIECE.Piece):
         """
         attacking_coordinates = []
 
-        # Move Rook Up
-        up = list()
-        for i in range(self.row):
-            up.append([self.row - (i+1), self.col])
-        up = self._remove_blocked_attacking_coordinates(board, up)
-        attacking_coordinates.extend(up)
+        # Move Bishop Up Left
+        up_left = list()
+        up_left.extend(self._get_diagonal_route(self.row, self.col, up=True, left=True))
+        up_left = self._remove_blocked_attacking_coordinates(board, up_left)
+        attacking_coordinates.extend(up_left)
 
-        # Move Rook Down
-        down = list()
-        for i in range(board.height-(self.row+1)):
-            down.append([self.row + (i+1), self.col])
-        down = self._remove_blocked_attacking_coordinates(board, down)
-        attacking_coordinates.extend(down)
+        # Move Bishop Up Right
+        up_right = list()
+        up_right.extend(self._get_diagonal_route(self.row, self.col, up=True, left=False))
+        up_right = self._remove_blocked_attacking_coordinates(board, up_right)
+        attacking_coordinates.extend(up_right)
 
-        # Move Rook Left
-        left = list()
-        for i in range(self.col):
-            left.append([self.row, self.col - (i+1)])
-        left = self._remove_blocked_attacking_coordinates(board, left)
-        attacking_coordinates.extend(left)
+        # Move Bishop Down Right
+        down_right = list()
+        down_right.extend(self._get_diagonal_route(self.row, self.col, up=False, left=False))
+        down_right = self._remove_blocked_attacking_coordinates(board, down_right)
+        attacking_coordinates.extend(down_right)
 
-        # Move Rook Right
-        right = list()
-        for i in range(board.width-(self.col+1)):
-            right.append([self.row, self.col + (i+1)])
-        right = self._remove_blocked_attacking_coordinates(board, right)
-        attacking_coordinates.extend(right)
+        # Move Bishop Down Left
+        down_left = list()
+        down_left.extend(self._get_diagonal_route(self.row, self.col, up=False, left=True))
+        down_left = self._remove_blocked_attacking_coordinates(board, down_left)
+        attacking_coordinates.extend(down_left)
 
         return attacking_coordinates
 
 
 
-# Rook Test
+# Bishop Test
 if __name__ == '__main__':
-    p = Rook('black')
+    p = Bishop('black')
     print(p.color, p.name, p.value)
     b = BOARD.Board()
 

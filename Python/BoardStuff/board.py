@@ -4,7 +4,7 @@ import square as SQUARE
 sys.path.append('../Pieces')
 import piece as PIECE
 # import pawn as PAWN
-# import rook as ROOK
+import rook as ROOK
 import knight as KNIGHT
 # import bishop as BISHOP
 # import queen as QUEEN
@@ -177,7 +177,7 @@ class Board:
     #         self.set_piece(PAWN.Pawn(white), self.alphabet[i], 2)
     #     for i in range(8):
     #         self.set_piece(PAWN.Pawn(black), self.alphabet[i], 7)
-        
+
         # Rooks
         self.set_piece(ROOK.Rook(white), 'A', 1)
         self.set_piece(ROOK.Rook(white), 'H', 1)
