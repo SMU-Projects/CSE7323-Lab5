@@ -4,10 +4,14 @@ import piece as PIECE
 
 class Square:
 
-    def __init__(self):
+    def __init__(self, row, col):
         """
         Define Square Class Variables
+        :param row: row of chess square
+        :param col: col of chess square
         """
+        self.row = row
+        self.col = col
         self.piece = PIECE.Piece()
 
 
@@ -17,9 +21,20 @@ class Square:
         Creates a copy of the square
         :return: A copy of the square
         """
-        s = Square()
+        s = Square(self.row, self.col)
         s.piece = self.piece.copy()
         return s
+
+
+
+    def set_piece(self, piece):
+        """
+        Sets a piece on the square
+        :param piece: Piece to be set
+        """
+        piece.row = self.row
+        piece.col = self.col
+        self.piece = piece
 
 
 
@@ -36,5 +51,5 @@ class Square:
 
 
 if __name__ == '__main__':
-    s = Square()
+    s = Square(0, 0)
     print("Square has", s.piece.name, "on it")

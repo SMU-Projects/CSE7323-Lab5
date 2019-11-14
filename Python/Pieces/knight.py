@@ -30,7 +30,7 @@ class Knight(PIECE.Piece):
         for coordinate in reversed(available_coordinates):
             r = coordinate[0]
             c = coordinate[1]
-            if board.grid[r][c].has_piece():
+            if board.grid[r][c].piece.color == self.color:
                 index = available_coordinates.index(coordinate)
                 available_coordinates.pop(index)
 
