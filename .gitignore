@@ -28,6 +28,14 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
+# Scratch folder and files; this folder was created for random tests and work
+Scratch/
+
+# Pycharm folder and files
+.idea/
+__pycache__/
+*.pyc
+
 ## Mac Specific Files
 .DS_Store
 
