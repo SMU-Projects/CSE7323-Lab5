@@ -32,7 +32,7 @@ xcuserdata/
 Scratch/
 
 # Pycharm folder and files
-.idea/
+/.idea/
 __pycache__/
 *.pyc
 
