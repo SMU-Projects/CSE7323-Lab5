@@ -35,8 +35,8 @@
       <file leaf-file-name="bishop.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pieces/bishop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="97" column="24" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
+            <state relative-caret-position="323">
+              <caret line="101" column="36" selection-start-line="52" selection-start-column="4" selection-end-line="101" selection-end-column="36" />
               <folding>
                 <element signature="e#10#20#0" expanded="true" />
               </folding>
@@ -44,21 +44,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="knight_test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Tests/knight_test.py">
+      <file leaf-file-name="queen.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pieces/queen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="1547">
+              <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
+              <folding>
+                <element signature="e#10#20#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bishop_test.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Tests/bishop_test.py">
+      <file leaf-file-name="queen_test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Tests/queen_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1547">
-              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+            <state relative-caret-position="935">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -79,8 +81,8 @@
       <file leaf-file-name="rook.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pieces/rook.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+            <state relative-caret-position="51">
+              <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="71" selection-end-column="43" />
               <folding>
                 <element signature="e#10#20#0" expanded="true" />
               </folding>
@@ -93,16 +95,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1513">
               <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="square.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BoardStuff/square.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -144,6 +136,8 @@
         <option value="$PROJECT_DIR$/BoardStuff/board.py" />
         <option value="$PROJECT_DIR$/Pieces/rook.py" />
         <option value="$PROJECT_DIR$/Pieces/bishop.py" />
+        <option value="$PROJECT_DIR$/Tests/queen_test.py" />
+        <option value="$PROJECT_DIR$/Pieces/queen.py" />
       </list>
     </option>
   </component>
@@ -249,7 +243,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
   </component>
-  <component name="RunManager" selected="Python.bishop_test">
+  <component name="RunManager" selected="Python.queen_test">
     <configuration default="false" name="rook" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -263,40 +257,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Chess" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Pieces/rook.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="rook_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Chess" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Tests/rook_test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="board" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BoardStuff" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Chess" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BoardStuff/board.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -331,6 +291,40 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Chess" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Tests/bishop_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="queen" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Pieces" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Chess" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Pieces/queen.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="queen_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Chess" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Tests/queen_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -484,18 +478,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.rook" />
-      <item index="1" class="java.lang.String" itemvalue="Python.rook_test" />
-      <item index="2" class="java.lang.String" itemvalue="Python.board" />
-      <item index="3" class="java.lang.String" itemvalue="Python.bishop" />
-      <item index="4" class="java.lang.String" itemvalue="Python.bishop_test" />
+      <item index="1" class="java.lang.String" itemvalue="Python.bishop" />
+      <item index="2" class="java.lang.String" itemvalue="Python.bishop_test" />
+      <item index="3" class="java.lang.String" itemvalue="Python.queen" />
+      <item index="4" class="java.lang.String" itemvalue="Python.queen_test" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.bishop_test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.bishop" />
-        <item index="2" class="java.lang.String" itemvalue="Python.rook" />
-        <item index="3" class="java.lang.String" itemvalue="Python.board" />
-        <item index="4" class="java.lang.String" itemvalue="Python.rook_test" />
+        <item index="0" class="java.lang.String" itemvalue="Python.queen_test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.queen" />
+        <item index="2" class="java.lang.String" itemvalue="Python.bishop_test" />
+        <item index="3" class="java.lang.String" itemvalue="Python.bishop" />
+        <item index="4" class="java.lang.String" itemvalue="Python.rook" />
       </list>
     </recent_temporary>
   </component>
@@ -535,7 +529,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="13" />
+      <option name="time" value="14" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -572,14 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/rook_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BoardStuff/board.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -600,24 +586,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/knight_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pieces/rook.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="e#10#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Pieces/piece.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1513">
@@ -626,20 +594,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/rook_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/bishop_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/knight_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-395">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Pieces/bishop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="97" column="24" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
+        <state relative-caret-position="323">
+          <caret line="101" column="36" selection-start-line="52" selection-start-column="4" selection-end-line="101" selection-end-column="36" />
           <folding>
             <element signature="e#10#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/bishop_test.py">
+    <entry file="file://$PROJECT_DIR$/Pieces/rook.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="71" selection-end-column="43" />
+          <folding>
+            <element signature="e#10#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pieces/queen.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1547">
-          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
+          <folding>
+            <element signature="e#10#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/queen_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
           <folding />
         </state>
       </provider>
