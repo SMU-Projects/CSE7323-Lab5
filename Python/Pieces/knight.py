@@ -13,10 +13,8 @@ class Knight(PIECE.Piece):
         """
         Define Knight Class Variables
         """
-        name = 'Knight'
-        symbol_char = 'n'
-        value = 3
-        super().declare_variables(color, name, symbol_char, value)
+        super()
+        self._declare_variables(color=color, name='Knight', symbol_char='n', value=3)
 
 
 

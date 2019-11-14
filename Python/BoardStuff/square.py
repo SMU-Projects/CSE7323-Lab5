@@ -22,7 +22,7 @@ class Square:
         :return: A copy of the square
         """
         s = Square(self.row, self.col)
-        s.piece = self.piece.copy()
+        s.piece = self.piece._copy()
         return s
 
 

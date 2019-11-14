@@ -13,13 +13,13 @@ class Piece():
         self.name = 'null piece'
         self.symbol = '  '
         self.value = 0
-        self.row = 0
-        self.col = 0
-        self.turn_last_moved = 0
+        self._row = 0
+        self._col = 0
+        self._turn_last_moved = 0
 
 
 
-    def declare_variables(self, color, name, symbol_char, value):
+    def _declare_variables(self, color, name, symbol_char, value):
         """
         Define Class Variables
         :param color: Color of piece
@@ -39,11 +39,11 @@ class Piece():
         except ERROR.UndefinedPieceColor as e:
             sys.exit(0)
         self.value = value
-        self.turn_last_moved = 0
+        self._turn_last_moved = 0
 
 
 
-    def copy(self):
+    def _copy(self):
         """
         Creates a copy of piece
         :return: A copy of piece
@@ -53,7 +53,7 @@ class Piece():
         p.name = self.name
         p.symbol = self.symbol
         p.value = self.value
-        p.turn_last_moved = self.turn_last_moved
+        p._turn_last_moved = self._turn_last_moved
         return p
 
 
@@ -78,24 +78,21 @@ class Piece():
 
 
 
-    def is_move_blocked(self, board, row1, col1, row2, col2):
+    def _remove_blocked_attacking_coordinates(self, board, route):
         """
-        Checks to see if move path has an obstruction or is blocked
-        :param row1:
-        :param col1:
-        :param row2:
-        :param col2:
-        :return: bool Whether the move is blocked
+        From a move route, get the coordinates that are unblocked
+        :param board:
+        :param route:
+        :return:
         """
-        pass
-        # blocked = False
-        # for coordinate in move.pass_coordinates:
-        #     r = coordinate[0]
-        #     c = coordinate[1]
-        #     pass_square = self.grid[r][c]
-        #     if pass_square.has_piece():
-        #         blocked = True
-        # return blocked
+        new_route = []
+        for coordinate in route:
+            r = coordinate[0]
+            c = coordinate[1]
+            new_route.append(coordinate)
+            if board.grid[r][c].has_piece():
+                return new_route
+        return new_route
 
 
 
@@ -104,14 +101,14 @@ class Piece():
         Updates turn_last_moved for the piece
         :param turn_count: The last turn this piece was moved on
         """
-        self.turn_last_moved = turn_count
+        self._turn_last_moved = turn_count
 
 
 
 if __name__ == '__main__':
     p = Piece()
     print(p.color, p.name, p.symbol, p.value)
-    p.declare_variables('white', 'Pawn', 'p', 1)
+    p._declare_variables('white', 'Pawn', 'p', 1)
     print(p.color, p.name, p.symbol, p.value)
-    p.declare_variables('red', 'Red Pawn', 'rp', 99)
+    p._declare_variables('red', 'Red Pawn', 'rp', 99)
     print('This should not print.')

@@ -39,7 +39,7 @@ class Board:
 
 
 
-    def copy_board(self):
+    def _copy_board(self):
         """
         Creates and returns a copy of the board; called after every move to record board history
         """
@@ -81,7 +81,7 @@ class Board:
         """
         row1, col1 = self._convert_coordinates(cf1, cr1)
         row2, col2 = self._convert_coordinates(cf2, cr2)
-        response = self.is_valid_move(color, row1, col1, row2, col2)
+        response = self._is_valid_move(color, row1, col1, row2, col2)
 
         if response["valid"]:
 
@@ -93,7 +93,7 @@ class Board:
             # *Enter Code Here*
 
             # Add the previous position to history
-            self.history.append(self.copy_board()) ######## TODO: This will need to be changed later on
+            self.history.append(self._copy_board()) ######## TODO: This will need to be changed later on
 
             # # Swap pieces
             # if response['isQueening']:
@@ -116,12 +116,12 @@ class Board:
             # self.move_count += 1
 
             end_square.set_piece(start_square.piece)
-            end_square.piece.turn_last_moved = self.move_count
+            end_square.piece.update_turn_last_moved(self.move_count)
             start_square.set_piece(PIECE.Piece())
             self.move_count += 1
         return response["valid"]
 
-    def is_valid_move(self, color, row1, col1, row2, col2):
+    def _is_valid_move(self, color, row1, col1, row2, col2):
         """
         Checks to see if move is valid and flags if the move is an En Passant, a Castling, or Queening move
         :param color: Color of Team
@@ -177,12 +177,12 @@ class Board:
     #         self.set_piece(PAWN.Pawn(white), self.alphabet[i], 2)
     #     for i in range(8):
     #         self.set_piece(PAWN.Pawn(black), self.alphabet[i], 7)
-    #
-    #     # Rooks
-    #     self.set_piece(ROOK.Rook(white), 'A', 1)
-    #     self.set_piece(ROOK.Rook(white), 'H', 1)
-    #     self.set_piece(ROOK.Rook(black), 'A', 8)
-    #     self.set_piece(ROOK.Rook(black), 'H', 8)
+        
+        # Rooks
+        self.set_piece(ROOK.Rook(white), 'A', 1)
+        self.set_piece(ROOK.Rook(white), 'H', 1)
+        self.set_piece(ROOK.Rook(black), 'A', 8)
+        self.set_piece(ROOK.Rook(black), 'H', 8)
 
         # Knights
         self.set_piece(KNIGHT.Knight(white), 'B', 1)
