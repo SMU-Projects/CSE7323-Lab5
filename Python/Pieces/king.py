@@ -24,12 +24,28 @@ class King(PIECE.Piece):
         :return: A list of available coordinates/squares
         """
         available_coordinates = self.get_attacking_coordinates(board)
-        for coordinate in reversed(available_coordinates):
-            r = coordinate[0]
-            c = coordinate[1]
-            if board.grid[r][c].piece.color == self.color:
-                index = available_coordinates.index(coordinate)
-                available_coordinates.pop(index)
+        available_coordinates = self._remove_coordinates_with_given_color(self.color, board, available_coordinates)
+
+        # Castling TODO: Check for Check in King Passing Squares
+        if self._turn_last_moved == 0:  # The following routes are the passing squares, and then ending square
+            # White's King Side Castle
+            if self.color == 'white' and board.grid[7][7].piece._turn_last_moved == 0:  # Hardcoded King Rook's Position
+                if not board.grid[self.row][self.col+1].has_piece() and not board.grid[self.row][self.col+2].has_piece():
+                    available_coordinates.append([self.row, self.col+2, 'is_castling'])
+            # White's Queen Side Castle
+            if self.color == 'white' and board.grid[7][0].piece._turn_last_moved == 0:  # Hardcoded Queen Rook's Position
+                if not board.grid[self.row][self.col-1].has_piece() and not board.grid[self.row][self.col-2].has_piece() \
+                        and not board.grid[self.row][self.col-3].has_piece():
+                    available_coordinates.append([self.row, self.col-2, 'is_castling'])
+            # Black's King Side Castle
+            if self.color == 'black' and board.grid[0][7].piece._turn_last_moved == 0:  # Hardcoded King Rook's Position
+                if not board.grid[self.row][self.col+1].has_piece() and not board.grid[self.row][self.col+2].has_piece():
+                    available_coordinates.append([self.row, self.col+2, 'is_castling'])
+            # Black's Queen Side Castle
+            if self.color == 'black' and board.grid[0][0].piece._turn_last_moved == 0:  # Hardcoded Queen Rook's Position
+                if not board.grid[self.row][self.col-1].has_piece() and not board.grid[self.row][self.col-2].has_piece() \
+                        and not board.grid[self.row][self.col-3].has_piece():
+                    available_coordinates.append([self.row, self.col-2, 'is_castling'])
 
         return available_coordinates
 
@@ -52,27 +68,7 @@ class King(PIECE.Piece):
         attacking_coordinates.append([self.row, self.col-1])  # Move King Left
         attacking_coordinates.append([self.row, self.col+1])  # Move King Left
 
-        # # Castling TODO: Check for Check in King Passing Squares
-        # if self.turn_last_moved == 0: # The following routes are the passing squares, and then ending square
-        #     # White's King Side Castle
-        #     if self.color == 'white' and board[7][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
-        #         routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
-        #     # White's Queen Side Castle
-        #     if self.color == 'white' and board[7][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
-        #         routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
-        #     # Black's King Side Castle
-        #     if self.color == 'black' and board[0][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
-        #         routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
-        #     # Black's Queen Side Castle
-        #     if self.color == 'black' and board[0][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
-        #         routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
-
-        for coordinate in reversed(attacking_coordinates):
-            r = coordinate[0]
-            c = coordinate[1]
-            if r >= board.height or r < 0 or c >= board.width or c < 0:
-                index = attacking_coordinates.index(coordinate)
-                attacking_coordinates.pop(index)
+        attacking_coordinates = self._remove_out_of_range_coordinates(board, attacking_coordinates)
 
         return attacking_coordinates
 
@@ -81,6 +77,7 @@ class King(PIECE.Piece):
 # King Test
 if __name__ == '__main__':
     p = King('black')
+    p.update_turn_last_moved(10)
     print(p.color, p.name, p.value)
     b = BOARD.Board()
 

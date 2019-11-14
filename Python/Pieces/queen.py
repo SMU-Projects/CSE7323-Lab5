@@ -25,12 +25,7 @@ class Queen(PIECE.Piece):
         :return: A list of available coordinates/squares
         """
         available_coordinates = self.get_attacking_coordinates(board)
-        for coordinate in reversed(available_coordinates):
-            r = coordinate[0]
-            c = coordinate[1]
-            if board.grid[r][c].piece.color == self.color:
-                index = available_coordinates.index(coordinate)
-                available_coordinates.pop(index)
+        available_coordinates = self._remove_coordinates_with_given_color(self.color, board, available_coordinates)
         return available_coordinates
 
 

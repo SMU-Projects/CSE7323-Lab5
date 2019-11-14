@@ -24,13 +24,7 @@ class Knight(PIECE.Piece):
         :return: A list of available coordinates/squares
         """
         available_coordinates = self.get_attacking_coordinates(board)
-        for coordinate in reversed(available_coordinates):
-            r = coordinate[0]
-            c = coordinate[1]
-            if board.grid[r][c].piece.color == self.color:
-                index = available_coordinates.index(coordinate)
-                available_coordinates.pop(index)
-
+        available_coordinates = self._remove_coordinates_with_given_color(self.color, board, available_coordinates)
         return available_coordinates
 
 
@@ -51,12 +45,7 @@ class Knight(PIECE.Piece):
         attacking_coordinates.append([self.row+2, self.col-1])  # 7
         attacking_coordinates.append([self.row+1, self.col-2])  # 8
 
-        for coordinate in reversed(attacking_coordinates):
-            r = coordinate[0]
-            c = coordinate[1]
-            if r >= board.height or r < 0 or c >= board.width or c < 0:
-                index = attacking_coordinates.index(coordinate)
-                attacking_coordinates.pop(index)
+        attacking_coordinates = self._remove_out_of_range_coordinates(board, attacking_coordinates)
 
         return attacking_coordinates
 

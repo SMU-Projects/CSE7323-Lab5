@@ -93,12 +93,12 @@ class Board:
             # *Enter Code Here*
 
             # Add the previous position to history
-            self.history.append(self._copy_board()) ######## TODO: This will need to be changed later on
+            self.history.append(self._copy_board())  # TODO: This will need to be changed later on
 
             if response['is_queening']:
                 end_square.set_piece(QUEEN.Queen(color))
             else:
-                end_square.set_piece(start_square.piece) # TODO: This will need to flag for captured piece when determining draw
+                end_square.set_piece(start_square.piece)  # TODO: This will need to flag for captured piece when determining draw
             end_square.piece.update_turn_last_moved(self.turn_count)
             if response["is_en_passant"]:
                 self.grid[row1][col2].set_piece(PIECE.Piece())
@@ -256,3 +256,8 @@ if __name__ == '__main__':
     print("Viable White Knight Move:", b.move_piece(white, 'G', 1, 'F', 3))
     print("Viable Black Knight Move:", b.move_piece(black, 'B', 8, 'C', 6))
     b.print_board()
+
+    print("Viable Black Knight Move:", b.move_piece(black, 'C', 6, 'E', 5))
+    b.print_board()
+
+    # print("Knight is in Check:", b.is_position_in_check(black, 3, 4))

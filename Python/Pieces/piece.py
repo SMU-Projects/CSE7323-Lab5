@@ -78,11 +78,12 @@ class Piece():
 
 
 
-    def _remove_blocked_attacking_coordinates(self, board, route):
+    @staticmethod
+    def _remove_blocked_attacking_coordinates(board, route):
         """
         From a move route, get the coordinates that are unblocked
-        :param board:
-        :param route:
+        :param board: The current state of the board
+        :param route: The route the piece is taking
         :return:
         """
         new_route = []
@@ -93,6 +94,43 @@ class Piece():
             if board.grid[r][c].has_piece():
                 return new_route
         return new_route
+
+
+
+    @staticmethod
+    def _remove_out_of_range_coordinates(board, coordinates):
+        """
+        From a list of coordinates, remove coordinates that are out of range
+        :param board: The current state of the board
+        :param coordinates: A list of attacking or available coordinates
+        :return: A list of attacking or available coordinates that are specifically in range of the board
+        """
+        for coordinate in reversed(coordinates):
+            r = coordinate[0]
+            c = coordinate[1]
+            if r >= board.height or r < 0 or c >= board.width or c < 0:
+                index = coordinates.index(coordinate)
+                coordinates.pop(index)
+        return coordinates
+
+
+
+    @staticmethod
+    def _remove_coordinates_with_given_color(color, board, coordinates):
+        """
+        From a list of coordinates, remove coordinates that that have the specified color
+        :param color: color of team
+        :param board: The current state of the board
+        :param coordinates: A list of attacking or available coordinates
+        :return: A list of attacking or available coordinates that don't have collisions with color
+        """
+        for coordinate in reversed(coordinates):
+            r = coordinate[0]
+            c = coordinate[1]
+            if board.grid[r][c].piece.color == color:
+                index = coordinates.index(coordinate)
+                coordinates.pop(index)
+        return coordinates
 
 
 
