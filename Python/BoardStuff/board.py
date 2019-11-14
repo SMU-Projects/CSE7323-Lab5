@@ -6,8 +6,8 @@ import piece as PIECE
 # import pawn as PAWN
 import rook as ROOK
 import knight as KNIGHT
-# import bishop as BISHOP
-# import queen as QUEEN
+import bishop as BISHOP
+import queen as QUEEN
 # import king as KING
 
 class Board:
@@ -190,19 +190,19 @@ class Board:
         self.set_piece(KNIGHT.Knight(black), 'B', 8)
         self.set_piece(KNIGHT.Knight(black), 'G', 8)
 
-    #     # Bishops
-    #     self.set_piece(BISHOP.Bishop(white), 'C', 1)
-    #     self.set_piece(BISHOP.Bishop(white), 'F', 1)
-    #     self.set_piece(BISHOP.Bishop(black), 'C', 8)
-    #     self.set_piece(BISHOP.Bishop(black), 'F', 8)
-    #
-    #     # Queens
-    #     self.set_piece(QUEEN.Queen(white), 'D', 1)
-    #     self.set_piece(QUEEN.Queen(black), 'D', 8)
-    #
-    #     # Kings
-    #     self.set_piece(KING.King(white), 'E', 1)
-    #     self.set_piece(KING.King(black), 'E', 8)
+        # Bishops
+        self.set_piece(BISHOP.Bishop(white), 'C', 1)
+        self.set_piece(BISHOP.Bishop(white), 'F', 1)
+        self.set_piece(BISHOP.Bishop(black), 'C', 8)
+        self.set_piece(BISHOP.Bishop(black), 'F', 8)
+
+        # Queens
+        self.set_piece(QUEEN.Queen(white), 'D', 1)
+        self.set_piece(QUEEN.Queen(black), 'D', 8)
+
+        # # Kings
+        # self.set_piece(KING.King(white), 'E', 1)
+        # self.set_piece(KING.King(black), 'E', 8)
 
 
 

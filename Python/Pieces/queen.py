@@ -4,7 +4,6 @@ import piece as PIECE
 import bishop as BISHOP
 sys.path.append('../BoardStuff')
 import board as BOARD
-import square as SQUARE
 
 
 # Queen Object

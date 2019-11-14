@@ -5,15 +5,15 @@ sys.path.append('../BoardStuff')
 import board as BOARD
 
 
-# Knight Object
-class Knight(PIECE.Piece):
+# King Object
+class King(PIECE.Piece):
 
     def __init__(self, color):
         """
-        Define Knight Class Variables
+        Define King Class Variables
         """
         super()
-        self._declare_variables(color=color, name='Knight', symbol_char='n', value=3)
+        self._declare_variables(color=color, name='King', symbol_char='k', value=10000)
 
 
 
@@ -42,14 +42,30 @@ class Knight(PIECE.Piece):
         :return: A list of attacking coordinates/squares
         """
         attacking_coordinates = []
-        attacking_coordinates.append([self.row-1, self.col-2])  # 1
-        attacking_coordinates.append([self.row-2, self.col-1])  # 2
-        attacking_coordinates.append([self.row-2, self.col+1])  # 3
-        attacking_coordinates.append([self.row-1, self.col+2])  # 4
-        attacking_coordinates.append([self.row+1, self.col+2])  # 5
-        attacking_coordinates.append([self.row+2, self.col+1])  # 6
-        attacking_coordinates.append([self.row+2, self.col-1])  # 7
-        attacking_coordinates.append([self.row+1, self.col-2])  # 8
+        attacking_coordinates.append([self.row-1, self.col-1])  # Move King Up Left
+        attacking_coordinates.append([self.row-1, self.col+1])  # Move King Up Right
+        attacking_coordinates.append([self.row+1, self.col+1])  # Move King Down Right
+        attacking_coordinates.append([self.row+1, self.col-1])  # Move King Down Left
+
+        attacking_coordinates.append([self.row-1, self.col])  # Move King Up
+        attacking_coordinates.append([self.row+1, self.col])  # Move King Down
+        attacking_coordinates.append([self.row, self.col-1])  # Move King Left
+        attacking_coordinates.append([self.row, self.col+1])  # Move King Left
+
+        # # Castling ########## TODO: Check for Check in King Passing Squares
+        # if self.turn_last_moved == 0: # The following routes are the passing squares, and then ending square
+        #     # White's King Side Castle
+        #     if self.color == 'white' and board[7][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
+        #         routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
+        #     # White's Queen Side Castle
+        #     if self.color == 'white' and board[7][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
+        #         routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
+        #     # Black's King Side Castle
+        #     if self.color == 'black' and board[0][7].piece.turn_last_moved == 0: # Hardcoded King Rook's Position
+        #         routes.append([[row, col+1], [row, col+2], [row, col+2, 'isCastling']])
+        #     # Black's Queen Side Castle
+        #     if self.color == 'black' and board[0][0].piece.turn_last_moved == 0: # Hardcoded Queen Rook's Position
+        #         routes.append([[row, col-1], [row, col-2], [row, col-3], [row, col-2, 'isCastling']])
 
         for coordinate in reversed(attacking_coordinates):
             r = coordinate[0]
@@ -62,9 +78,9 @@ class Knight(PIECE.Piece):
 
 
 
-# Knight Test
+# King Test
 if __name__ == '__main__':
-    p = Knight('black')
+    p = King('black')
     print(p.color, p.name, p.value)
     b = BOARD.Board()
 
@@ -95,4 +111,5 @@ if __name__ == '__main__':
     print('For:', 7, 7)
     for available_coordinates in p.get_available_coordinates(b):
         print(available_coordinates)
+
 

@@ -3,7 +3,6 @@ import sys
 import piece as PIECE
 sys.path.append('../BoardStuff')
 import board as BOARD
-import square as SQUARE
 
 
 # Bishop Object
