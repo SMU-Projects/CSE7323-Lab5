@@ -32,8 +32,8 @@ xcuserdata/
 Scratch/
 
 # Pycharm folder and files
-/.idea/
-__pycache__/
+Python/.idea/
+Python/__pycache__/
 *.pyc
 
 ## Mac Specific Files
