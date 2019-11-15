@@ -2,7 +2,7 @@
 import sys
 
 sys.path.append('../Players')
-# import human as HUMAN
+import human as HUMAN
 import ai_random as AI_RANDOM
 
 sys.path.append('../BoardStuff')
@@ -21,18 +21,17 @@ import king as KING
 class Chess:
 
     def __init__(self):
-        """Initialization for Chess Object"""
+        """
+        Initialization for Chess Object
+        """
 
         # Setup chess board
         self.chess_board = BOARD.Board()
         self.chess_board.set_standard_board()
 
-        # Declare win conditions
-        self.check = False
-        self.checkmate = False
-        self.stalemate = False
-        self.fifty_move_draw = False
-        self.insufficient_material = False
+        # Declare game over conditions
+        self.is_checkmate = False
+        self.is_draw = False
 
         # Declare players
         self.white_player = None
@@ -42,7 +41,9 @@ class Chess:
         self.white_turn = True
 
     def setup_game(self):
-        """Setup players and rules for Chess Game"""
+        """
+        Setup players and rules for Chess Game
+        """
         # Redeclare players
         # self.white_player = HUMAN.Human('white')
         self.white_player = AI_RANDOM.AI_Random('white')
@@ -50,9 +51,12 @@ class Chess:
         self.black_player = AI_RANDOM.AI_Random('black')
 
     def begin_game(self):
-        """Game Loop for Chess Game"""
+        """
+        Game Loop for Chess Game
+        :return: is_checkmate, is_draw
+        """
         self.chess_board.print_board()
-        while not self.checkmate:
+        while not self.is_checkmate and not self.is_draw:
 
             valid = False
             while not valid:
@@ -64,16 +68,32 @@ class Chess:
                     cf1, cr1, cf2, cr2 = self.black_player.request_move()
                     valid = self.chess_board.move_piece(self.black_player.color, cf1, cr1, cf2, cr2)
 
-            # After valid move change player's turn
+            # After valid move change player's turn and check for game over condition
             if self.white_turn:
                 self.white_turn = False
+                self.is_checkmate = self.chess_board.is_checkmate("black")
+                if not self.is_checkmate:
+                    self.is_draw = self.chess_board.is_draw("black")
             else:
                 self.white_turn = True
+                self.is_checkmate = self.chess_board.is_checkmate("white")
+                if not self.is_checkmate:
+                    self.is_draw = self.chess_board.is_draw("white")
 
             self.chess_board.print_board()
-            # self.chess_board.move_count # This will get the current move_count
 
-        # Return winner
+        if self.is_checkmate:
+            if self.white_turn:
+                print("Black Wins")
+            else:
+                print("White Wins")
+
+        if self.is_draw:
+            print("Draw")
+
+        return self.is_checkmate, self.is_draw
+
+
 
 # Run Game
 if __name__ == '__main__':

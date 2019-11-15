@@ -118,31 +118,14 @@ class Board:
 
             if response["is_castling"]:
                 if col2 - col1 > 0: # King Side Castle
-                    self.grid[row2][col2 - 1].piece = self.grid[row2][col2 + 1].piece
-                    self.grid[row2][col2 - 1].piece.turn_last_moved = self.turn_count
-                    self.grid[row2][col2 + 1].piece = PIECE.Piece()
-                else: # Queen Side Castle
-                    self.grid[row2][col2 + 1].piece = self.grid[row2][col2 - 2].piece
-                    self.grid[row2][col2 + 1].piece.turn_last_moved = self.turn_count
-                    self.grid[row2][col2 - 2].piece = PIECE.Piece()
+                    self.grid[row2][col2 - 1].set_piece(self.grid[row2][col2 + 1].piece)
 
-            # Are we in Check?
-            if self.has_king:
-                if end_square.piece.name == 'King':
-                    check = self.is_coordinate_in_check(color, row2, col2)
-                    if not check:
-                        if color == "white":
-                            self.white_king_position = [row2, col2]
-                        else:
-                            self.black_king_position = [row2, col2]
-                else:
-                    if color == "white":
-                        check = self.is_coordinate_in_check(color, self.white_king_position[0], self.white_king_position[1])
-                    else:
-                        check = self.is_coordinate_in_check(color, self.black_king_position[0], self.black_king_position[1])
-                if check:
-                    self.grid = previous_grid
-                    return False
+                    self.grid[row2][col2 - 1].piece.update_turn_last_moved(self.turn_count)
+                    self.grid[row2][col2 + 1].set_piece(PIECE.Piece())
+                else: # Queen Side Castle
+                    self.grid[row2][col2 + 1].set_piece(self.grid[row2][col2 - 2].piece)
+                    self.grid[row2][col2 + 1].piece.update_turn_last_moved(self.turn_count)
+                    self.grid[row2][col2 - 2].set_piece(PIECE.Piece())
 
             # Add the previous position to history
             self.history.append(previous_grid)  # TODO: This will need to be changed later on
@@ -184,11 +167,11 @@ class Board:
             return response
 
         # Gets all available coordinates for piece
-        available_coordinates = start_square_piece.get_available_coordinates(self)
+        valid_available_coordinates = self.get_valid_available_coordinates(start_square_piece)
 
         # Check to see if move is found in the available coordinates
         attack_coordinate = [row2, col2]
-        for coordinate in available_coordinates:
+        for coordinate in valid_available_coordinates:
             if len(coordinate) != 2:
                 if coordinate[-1] == 'is_castling':
                     response["is_castling"] = True
@@ -205,6 +188,61 @@ class Board:
             if attack_coordinate == coordinate:
                 response["valid"] = True
         return response
+
+
+
+    def get_valid_available_coordinates(self, piece):
+        """
+        idk yet
+        :param piece:
+        :return:
+        """
+
+        row1 = piece.row
+        col1 = piece.col
+        color = piece.color
+
+        piece = self.grid[row1][col1].piece
+        available_coordinates = piece.get_available_coordinates(self)
+
+        # If there is no king, all available coordinates are valid one
+        if not self.has_king:
+            return available_coordinates
+
+        # Build a valid available coordinates list
+        valid_available_coordinates = []
+
+        # For every available move in coordinate...
+        for coordinate in available_coordinates:
+
+            # Copy grid and evaluate new position
+            previous_grid = self._copy_grid()
+            row2 = coordinate[0]
+            col2 = coordinate[1]
+
+            # Grab Squares
+            start_square = self.grid[row1][col1]
+            end_square = self.grid[coordinate[0]][col2]
+
+            end_square.set_piece(start_square.piece)
+            if len(coordinate) != 2 and coordinate[-1] == 'is_en_passant':
+                self.grid[row1][col2].set_piece(PIECE.Piece())
+            start_square.set_piece(PIECE.Piece())
+
+            # Are we in Check?
+            if end_square.piece.name == 'King':
+                check = self.is_coordinate_in_check(color, row2, col2)
+            else:
+                if color == "white":
+                    check = self.is_coordinate_in_check(color, self.white_king_position[0], self.white_king_position[1])
+                else:
+                    check = self.is_coordinate_in_check(color, self.black_king_position[0], self.black_king_position[1])
+            if not check:
+                valid_available_coordinates.append(coordinate)
+
+            self.grid = previous_grid
+
+        return valid_available_coordinates
 
 
 
@@ -229,26 +267,44 @@ class Board:
 
 
 
-    # def is_coordinate_in_checkmate(self, color, row, col):
-    #     """
-    #     Checks to see if a given coordinate is in checkmate
-    #     :param color: Color of Team
-    #     :param row: Row of coordinate
-    #     :param col: Col of coordinate
-    #     :return: bool Whether the coordinate is in checkmate or not
-    #     """
-    #     piece = self.grid[row][col].piece
-    #     available_coordinates = piece.get_available_coordinates(self)
-    #     in_check_coordinate = [row, col]
-    #     for r in range(self.height):
-    #         for c in range(self.width):
-    #             piece = self.grid[r][c].piece
-    #             if piece.color != color:
-    #                 attack_coordinates = piece.get_attacking_coordinates(self)
-    #                 for coordinate in attack_coordinates:
-    #                     if coordinate == in_check_coordinate:
-    #                         return True
-    #     return False
+    def is_checkmate(self, color):
+        """
+        Checks to see if the specified team is in checkmate
+        :param color: Color of team that might be in checkmate
+        :return: bool Whether the team is in checkmate or not
+        """
+        # Check if position is first in check; Assume only two teams
+        if color == "white":
+            if not self.is_coordinate_in_check(color, self.white_king_position[0], self.white_king_position[1]):
+                return False
+        else:
+            if not self.is_coordinate_in_check(color, self.black_king_position[0], self.black_king_position[1]):
+                return False
+
+        # Does the team have any available moves to get out of check?
+        for r in range(self.height):
+            for c in range(self.width):
+                piece = self.grid[r][c].piece
+                if piece.color == color:
+                    if len(self.get_valid_available_coordinates(piece)) > 0:
+                        return False
+
+        # No valid available coordinates were found, this is checkmate
+        return True
+
+
+
+    def is_draw(self, color):
+        """
+        Checks to see if the specified team is in a draw
+        :param color: Color of team that might be in a draw
+        :return: bool Whether the team is in a draw or not
+        """
+        pass
+        # stalemate = False
+        # threefold_repetition = False
+        # fifty_move_draw = False
+        # insufficient_material = False
 
 
 
