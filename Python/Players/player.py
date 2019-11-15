@@ -7,6 +7,7 @@ class Player:
         Initialization for Player Object; Base class for various Chess players
         """
         self.color = color
+        self._alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     def request_move(self):
         """

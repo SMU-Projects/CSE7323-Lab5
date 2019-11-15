@@ -229,6 +229,29 @@ class Board:
 
 
 
+    # def is_coordinate_in_checkmate(self, color, row, col):
+    #     """
+    #     Checks to see if a given coordinate is in checkmate
+    #     :param color: Color of Team
+    #     :param row: Row of coordinate
+    #     :param col: Col of coordinate
+    #     :return: bool Whether the coordinate is in checkmate or not
+    #     """
+    #     piece = self.grid[row][col].piece
+    #     available_coordinates = piece.get_available_coordinates(self)
+    #     in_check_coordinate = [row, col]
+    #     for r in range(self.height):
+    #         for c in range(self.width):
+    #             piece = self.grid[r][c].piece
+    #             if piece.color != color:
+    #                 attack_coordinates = piece.get_attacking_coordinates(self)
+    #                 for coordinate in attack_coordinates:
+    #                     if coordinate == in_check_coordinate:
+    #                         return True
+    #     return False
+
+
+
     def set_standard_board(self):
         """
         Sets the Board with the standard Chess Opening
