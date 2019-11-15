@@ -25,7 +25,8 @@ class Board:
 
         # Todo: move variables into Chess Class
         self.turn_count = 1
-        self.has_king = False
+        self.turn_last_capture = 0
+        self._has_king = False
         self.white_king_position = None
         self.black_king_position = None
 
@@ -70,7 +71,7 @@ class Board:
         else:
             row, col = self._convert_coordinates(chess_file, chess_rank)
         if piece.name == "King":
-            self.has_king = True
+            self._has_king = True
             try:
                 if piece.color == 'white':
                     self.white_king_position = [row, col]
@@ -81,6 +82,8 @@ class Board:
             except ERROR.UndefinedPieceColor as e:
                 sys.exit(0)
         square = self.grid[row][col]
+        if square.has_piece():
+            self.turn_last_capture = -1
         square.set_piece(piece)
 
 
@@ -108,30 +111,30 @@ class Board:
             end_square = self.grid[row2][col2]
 
             if response['is_queening']:
-                end_square.set_piece(QUEEN.Queen(color))
+                self.set_piece(QUEEN.Queen(color), row2, col2, debug=True)
             else:
-                end_square.set_piece(start_square.piece)  # TODO: This will need to flag for captured piece when determining draw
+                self.set_piece(start_square.piece, row2, col2, debug=True)  # TODO: This will need to flag for captured piece when determining draw
             end_square.piece.update_turn_last_moved(self.turn_count)
             if response["is_en_passant"]:
-                self.grid[row1][col2].set_piece(PIECE.Piece())
+                self.set_piece(PIECE.Piece(), row1, col2, debug=True)
             start_square.set_piece(PIECE.Piece())
 
             if response["is_castling"]:
                 if col2 - col1 > 0: # King Side Castle
-                    self.grid[row2][col2 - 1].set_piece(self.grid[row2][col2 + 1].piece)
-
+                    self.set_piece(self.grid[row2][col2 + 1].piece, row2, col2 - 1, debug=True)
                     self.grid[row2][col2 - 1].piece.update_turn_last_moved(self.turn_count)
-                    self.grid[row2][col2 + 1].set_piece(PIECE.Piece())
+                    self.set_piece(PIECE.Piece(), row2, col2 + 1, debug=True)
                 else: # Queen Side Castle
-                    self.grid[row2][col2 + 1].set_piece(self.grid[row2][col2 - 2].piece)
+                    self.set_piece(self.grid[row2][col2 - 2].piece, row2, col2 + 1, debug=True)
                     self.grid[row2][col2 + 1].piece.update_turn_last_moved(self.turn_count)
-                    self.grid[row2][col2 - 2].set_piece(PIECE.Piece())
+                    self.set_piece(PIECE.Piece(), row2, col2 - 2, debug=True)
 
             # Add the previous position to history
             self.history.append(previous_grid)  # TODO: This will need to be changed later on
 
-            # Update Turn Count
+            # Update Turn Variables
             self.turn_count += 1
+            self.turn_last_capture += 1
 
         return response["valid"]
 
@@ -206,7 +209,7 @@ class Board:
         available_coordinates = piece.get_available_coordinates(self)
 
         # If there is no king, all available coordinates are valid one
-        if not self.has_king:
+        if not self._has_king:
             return available_coordinates
 
         # Build a valid available coordinates list
@@ -224,6 +227,7 @@ class Board:
             start_square = self.grid[row1][col1]
             end_square = self.grid[coordinate[0]][col2]
 
+            # Use Square's set_piece rather than self's because self's variables should not be updated
             end_square.set_piece(start_square.piece)
             if len(coordinate) != 2 and coordinate[-1] == 'is_en_passant':
                 self.grid[row1][col2].set_piece(PIECE.Piece())
@@ -300,11 +304,24 @@ class Board:
         :param color: Color of team that might be in a draw
         :return: bool Whether the team is in a draw or not
         """
-        pass
         # stalemate = False
         # threefold_repetition = False
         # fifty_move_draw = False
         # insufficient_material = False
+
+        if self.turn_last_capture >= 100:
+            return True
+
+        # Does the team have any available moves to get out of check?
+        for r in range(self.height):
+            for c in range(self.width):
+                piece = self.grid[r][c].piece
+                if piece.color == color:
+                    if len(self.get_valid_available_coordinates(piece)) > 0:
+                        return False
+
+        # No valid available coordinates were found, this is a stalemate
+        return True
 
 
 
