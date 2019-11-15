@@ -22,6 +22,8 @@ class Square:
         :return: A copy of the square
         """
         s = Square(self.row, self.col)
+        s.row = self.row
+        s.col = self.col
         s.piece = self.piece._copy()
         return s
 

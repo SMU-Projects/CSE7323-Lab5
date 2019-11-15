@@ -1,5 +1,6 @@
 # Imports
 import sys
+import copy as COPY
 sys.path.append('../BoardStuff')
 import errors as ERROR
 
@@ -13,8 +14,8 @@ class Piece():
         self.name = 'null piece'
         self.symbol = '  '
         self.value = 0
-        self._row = 0
-        self._col = 0
+        self.row = 0
+        self.col = 0
         self._turn_last_moved = 0
 
 
@@ -29,31 +30,26 @@ class Piece():
         """
         self.color = color
         self.name = name
-        try:
-            if color == 'black':
-                self.symbol = 'b'+symbol_char
-            elif color == 'white':
-                self.symbol = 'w'+symbol_char
-            else:
-                raise ERROR.UndefinedPieceColor(color, name)
-        except ERROR.UndefinedPieceColor as e:
-            sys.exit(0)
         self.value = value
         self._turn_last_moved = 0
+        try:
+            if color == 'white':
+                self.symbol = 'w'+symbol_char
+            elif color == 'black':
+                self.symbol = 'b'+symbol_char
+            else:
+                raise ERROR.UndefinedPieceColor(self)
+        except ERROR.UndefinedPieceColor as e:
+            sys.exit(0)
 
 
 
     def _copy(self):
         """
-        Creates a copy of piece
+        Creates a copy of piece using python's copy import
         :return: A copy of piece
         """
-        p = Piece()
-        p.color = self.color
-        p.name = self.name
-        p.symbol = self.symbol
-        p.value = self.value
-        p._turn_last_moved = self._turn_last_moved
+        p = COPY.copy(self)
         return p
 
 
@@ -64,7 +60,7 @@ class Piece():
         :param board: The current state of the board
         :return: A list of available coordinates/squares
         """
-        pass
+        return []
 
 
 
@@ -74,7 +70,7 @@ class Piece():
         :param board: The current state of the board
         :return: A list of attacking coordinates/squares
         """
-        pass
+        return []
 
 
 

@@ -27,23 +27,27 @@ class King(PIECE.Piece):
         available_coordinates = self._remove_coordinates_with_given_color(self.color, board, available_coordinates)
 
         # Castling TODO: Check for Check in King Passing Squares
-        if self._turn_last_moved == 0:  # The following routes are the passing squares, and then ending square
+        if self._turn_last_moved == 0 and not board.is_coordinate_in_check(self.color, self.row, self.col):
             # White's King Side Castle
             if self.color == 'white' and board.grid[7][7].piece._turn_last_moved == 0:  # Hardcoded King Rook's Position
-                if not board.grid[self.row][self.col+1].has_piece() and not board.grid[self.row][self.col+2].has_piece():
+                if not board.grid[self.row][self.col+1].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col+1) \
+                        and not board.grid[self.row][self.col+2].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col+2):
                     available_coordinates.append([self.row, self.col+2, 'is_castling'])
             # White's Queen Side Castle
             if self.color == 'white' and board.grid[7][0].piece._turn_last_moved == 0:  # Hardcoded Queen Rook's Position
-                if not board.grid[self.row][self.col-1].has_piece() and not board.grid[self.row][self.col-2].has_piece() \
+                if not board.grid[self.row][self.col-1].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col-1) \
+                        and not board.grid[self.row][self.col-2].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col-2) \
                         and not board.grid[self.row][self.col-3].has_piece():
                     available_coordinates.append([self.row, self.col-2, 'is_castling'])
             # Black's King Side Castle
             if self.color == 'black' and board.grid[0][7].piece._turn_last_moved == 0:  # Hardcoded King Rook's Position
-                if not board.grid[self.row][self.col+1].has_piece() and not board.grid[self.row][self.col+2].has_piece():
+                if not board.grid[self.row][self.col+1].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col+1) \
+                        and not board.grid[self.row][self.col+2].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col+2):
                     available_coordinates.append([self.row, self.col+2, 'is_castling'])
             # Black's Queen Side Castle
             if self.color == 'black' and board.grid[0][0].piece._turn_last_moved == 0:  # Hardcoded Queen Rook's Position
-                if not board.grid[self.row][self.col-1].has_piece() and not board.grid[self.row][self.col-2].has_piece() \
+                if not board.grid[self.row][self.col-1].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col-1) \
+                        and not board.grid[self.row][self.col-2].has_piece() and not board.is_coordinate_in_check(self.color, self.row, self.col-2) \
                         and not board.grid[self.row][self.col-3].has_piece():
                     available_coordinates.append([self.row, self.col-2, 'is_castling'])
 

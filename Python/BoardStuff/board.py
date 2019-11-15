@@ -1,5 +1,6 @@
 import sys
 import square as SQUARE
+import errors as ERROR
 
 sys.path.append('../Pieces')
 import piece as PIECE
@@ -22,7 +23,11 @@ class Board:
         self.grid = [[SQUARE.Square(r, c) for c in range(self.width)] for r in range(self.height)]
         self.history = []
 
-        self.turn_count = 1 # Todo: move variable into Chess Class
+        # Todo: move variables into Chess Class
+        self.turn_count = 1
+        self.has_king = False
+        self.white_king_position = None
+        self.black_king_position = None
 
 
 
@@ -39,15 +44,15 @@ class Board:
 
 
 
-    def _copy_board(self):
+    def _copy_grid(self):
         """
         Creates and returns a copy of the board; called after every move to record board history
         """
-        b = [[SQUARE.Square(r, c) for c in range(self.height)] for r in range(self.width)]
+        grid = [[SQUARE.Square(r, c) for c in range(self.height)] for r in range(self.width)]
         for r in range(self.width):
             for c in range(self.height):
-                b[r][c] = self.grid[r][c].copy()
-        return b
+                grid[r][c] = self.grid[r][c].copy()
+        return grid
 
 
 
@@ -64,6 +69,17 @@ class Board:
             col = chess_rank
         else:
             row, col = self._convert_coordinates(chess_file, chess_rank)
+        if piece.name == "King":
+            self.has_king = True
+            try:
+                if piece.color == 'white':
+                    self.white_king_position = [row, col]
+                elif piece.color == 'black':
+                    self.black_king_position = [row, col]
+                else:
+                    raise ERROR.UndefinedPieceColor(piece)
+            except ERROR.UndefinedPieceColor as e:
+                sys.exit(0)
         square = self.grid[row][col]
         square.set_piece(piece)
 
@@ -81,19 +97,15 @@ class Board:
         """
         row1, col1 = self._convert_coordinates(cf1, cr1)
         row2, col2 = self._convert_coordinates(cf2, cr2)
-        response = self._is_valid_move(color, row1, col1, row2, col2)
+        response = self._is_valid_move(color, row1, col1, row2, col2)  # Does not evaluate Check
 
         if response["valid"]:
+
+            previous_grid = self._copy_grid()
 
             # Grab Squares
             start_square = self.grid[row1][col1]
             end_square = self.grid[row2][col2]
-
-            # Are we in Check?
-            # *Enter Code Here*
-
-            # Add the previous position to history
-            self.history.append(self._copy_board())  # TODO: This will need to be changed later on
 
             if response['is_queening']:
                 end_square.set_piece(QUEEN.Queen(color))
@@ -113,8 +125,34 @@ class Board:
                     self.grid[row2][col2 + 1].piece = self.grid[row2][col2 - 2].piece
                     self.grid[row2][col2 + 1].piece.turn_last_moved = self.turn_count
                     self.grid[row2][col2 - 2].piece = PIECE.Piece()
+
+            # Are we in Check?
+            if self.has_king:
+                if end_square.piece.name == 'King':
+                    check = self.is_coordinate_in_check(color, row2, col2)
+                    if not check:
+                        if color == "white":
+                            self.white_king_position = [row2, col2]
+                        else:
+                            self.black_king_position = [row2, col2]
+                else:
+                    if color == "white":
+                        check = self.is_coordinate_in_check(color, self.white_king_position[0], self.white_king_position[1])
+                    else:
+                        check = self.is_coordinate_in_check(color, self.black_king_position[0], self.black_king_position[1])
+                if check:
+                    self.grid = previous_grid
+                    return False
+
+            # Add the previous position to history
+            self.history.append(previous_grid)  # TODO: This will need to be changed later on
+
+            # Update Turn Count
             self.turn_count += 1
+
         return response["valid"]
+
+
 
     def _is_valid_move(self, color, row1, col1, row2, col2):
         """
@@ -167,6 +205,27 @@ class Board:
             if attack_coordinate == coordinate:
                 response["valid"] = True
         return response
+
+
+
+    def is_coordinate_in_check(self, color, row, col):
+        """
+        Checks to see if a given coordinate is in check
+        :param color: Color of Team
+        :param row: Row of coordinate
+        :param col: Col of coordinate
+        :return: bool Whether the coordinate is in check or not
+        """
+        in_check_coordinate = [row, col]
+        for r in range(self.height):
+            for c in range(self.width):
+                piece = self.grid[r][c].piece
+                if piece.color != color:
+                    attack_coordinates = piece.get_attacking_coordinates(self)
+                    for coordinate in attack_coordinates:
+                        if coordinate == in_check_coordinate:
+                            return True
+        return False
 
 
 
@@ -260,4 +319,4 @@ if __name__ == '__main__':
     print("Viable Black Knight Move:", b.move_piece(black, 'C', 6, 'E', 5))
     b.print_board()
 
-    # print("Knight is in Check:", b.is_position_in_check(black, 3, 4))
+    print("Knight is in Check:", b.is_coordinate_in_check(black, 3, 4))

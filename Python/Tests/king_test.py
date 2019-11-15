@@ -3,6 +3,7 @@ import sys
 sys.path.append('../Pieces')
 import king as KING
 import rook as ROOK
+import pawn as PAWN
 sys.path.append('../BoardStuff')
 import board as BOARD
 
@@ -142,7 +143,6 @@ true_values = []
 test_values = []
 
 # Movement Test for Castling
-b_test.print_board()
 test_values.append(b_test.move_piece(white, 'E', 1, 'C', 1))  # Move 1
 true_values.append(False)
 test_values.append(b_test.move_piece(black, 'E', 8, 'G', 8))  # Move 2
@@ -164,7 +164,66 @@ for i in range(len(true_values)):
 ############################### Castling Test 4 ################################
 ################################################################################
 
+# Variables
+white = 'white'
+black = 'black'
+b_true = BOARD.Board()
+b_test = BOARD.Board()
 
+# Set Boards
+#   True Board
+b_true.set_piece(KING.King(white), 'G', 1)
+b_true.set_piece(KING.King(black), 'E', 8)
+b_true.set_piece(ROOK.Rook(black), 'H', 8)
+b_true.set_piece(ROOK.Rook(black), 'A', 8)
+b_true.set_piece(ROOK.Rook(white), 'F', 1)
+b_true.set_piece(ROOK.Rook(white), 'A', 1)
+b_true.set_piece(PAWN.Pawn(white), 'G', 7)
+b_true.set_piece(PAWN.Pawn(black), 'B', 2)
+b_true.set_piece(ROOK.Rook(black), 'E', 7)
+b_true.set_piece(ROOK.Rook(white), 'E', 2)
+
+#   Test Board
+b_test.set_piece(KING.King(white), 'E', 1)
+b_test.set_piece(KING.King(black), 'E', 8)
+b_test.set_piece(ROOK.Rook(black), 'H', 8)
+b_test.set_piece(ROOK.Rook(black), 'A', 8)
+b_test.set_piece(ROOK.Rook(white), 'H', 1)
+b_test.set_piece(ROOK.Rook(white), 'A', 1)
+b_test.set_piece(PAWN.Pawn(white), 'G', 7)
+b_test.set_piece(PAWN.Pawn(black), 'B', 2)
+b_test.set_piece(ROOK.Rook(black), 'E', 7)
+b_test.set_piece(ROOK.Rook(white), 'D', 2)
+
+# Test
+true_values = []
+test_values = []
+
+# Movement Test for Castling through Check
+test_values.append(b_test.move_piece(white, 'E', 1, 'G', 1))  # Move 1
+true_values.append(False)
+test_values.append(b_test.move_piece(white, 'E', 1, 'C', 1))  # Move 2
+true_values.append(False)
+test_values.append(b_test.move_piece(black, 'E', 8, 'C', 8))  # Move 3
+true_values.append(False)
+test_values.append(b_test.move_piece(black, 'E', 8, 'G', 8))  # Move 4
+true_values.append(False)
+test_values.append(b_test.move_piece(white, 'D', 2, 'E', 2))  # Move 5
+true_values.append(True)
+test_values.append(b_test.move_piece(white, 'E', 1, 'G', 1))  # Move 6
+true_values.append(True)
+
+
+print('-------------------- TRUE 4 ---------------------\n')
+b_true.print_board()
+print('-------------------- TEST 4 ---------------------\n')
+b_test.print_board()
+
+accurate = True
+for i in range(len(true_values)):
+    if true_values[i] != test_values[i]:
+        accurate = False
+        print('Error Move', i+1, '--- truth:', true_values[i], '||| test:', test_values[i])
 
 ################################################################################
 ############################# General King Test 5 ##############################
@@ -190,8 +249,6 @@ b_test.set_piece(KING.King(white), 'D', 1)
 b_test.set_piece(KING.King(black), 'E', 8)
 b_test.set_piece(ROOK.Rook(black), 'H', 8)
 b_test.set_piece(ROOK.Rook(black), 'A', 8)
-# white king has already moved
-b_test.grid[7][3].piece.turn_last_moved = 10
 
 # Test
 true_values = []
