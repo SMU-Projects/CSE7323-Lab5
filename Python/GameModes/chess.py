@@ -4,6 +4,7 @@ import sys
 sys.path.append('../Players')
 import human as HUMAN
 import ai_random as AI_RANDOM
+import ai_cnn1 as AI_CNN1
 
 sys.path.append('../BoardStuff')
 import board as BOARD
@@ -47,8 +48,10 @@ class Chess:
         # Redeclare players
         # self.white_player = HUMAN.Human('white')
         self.white_player = AI_RANDOM.AI_Random('white')
+        # self.white_player = AI_CNN1.AI_Cnn1('white')
         # self.black_player = HUMAN.Human('black')
-        self.black_player = AI_RANDOM.AI_Random('black')
+        # self.black_player = AI_RANDOM.AI_Random('black')
+        self.black_player = AI_CNN1.AI_Cnn1('black')
 
     def begin_game(self):
         """
@@ -62,10 +65,10 @@ class Chess:
             while not valid:
                 # Request move from player
                 if self.white_turn:
-                    cf1, cr1, cf2, cr2 = self.white_player.request_move()
+                    cf1, cr1, cf2, cr2 = self.white_player.request_move(self.chess_board)
                     valid = self.chess_board.move_piece(self.white_player.color, cf1, cr1, cf2, cr2)
                 else:
-                    cf1, cr1, cf2, cr2 = self.black_player.request_move()
+                    cf1, cr1, cf2, cr2 = self.black_player.request_move(self.chess_board)
                     valid = self.chess_board.move_piece(self.black_player.color, cf1, cr1, cf2, cr2)
 
             # After valid move change player's turn and check for game over condition

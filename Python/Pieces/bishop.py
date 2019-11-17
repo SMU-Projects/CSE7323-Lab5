@@ -13,7 +13,7 @@ class Bishop(PIECE.Piece):
         Define Bishop Class Variables
         """
         super()
-        self._declare_variables(color=color, name='Bishop', symbol_char='b', value=3)
+        self._declare_variables(color=color, name='Bishop', symbol_char='b', value=3.5)
 
 
 

@@ -1,7 +1,6 @@
 # Imports
 import sys
 import player as PLAYER
-sys.path.append('../BoardStuff')
 
 class Human(PLAYER.Player):
 
@@ -11,7 +10,7 @@ class Human(PLAYER.Player):
         """
         super().__init__(color)
 
-    def request_move(self):
+    def request_move(self, board):
         """
         Asks the player what move to make, Player submits possible move to Chess game
         :return: a starting location and ending location for chess move

@@ -32,12 +32,12 @@ class Board:
 
 
 
-    def _convert_coordinates(self, chess_file, chess_rank):
+    def _convert_to_array_coordinates(self, chess_file, chess_rank):
         """
         Converts Chess rank and file values to Array row and column values
         :param chess_file: File coordinate
         :param chess_rank: Rank coordinate
-        :return: row, col from the file, rank
+        :return: row, col for the file, rank
         """
         row = self.height - chess_rank
         col = self.alphabet.find(chess_file)
@@ -45,9 +45,42 @@ class Board:
 
 
 
+    def _convert_to_chess_coordinates(self, row, col):
+        """
+        Converts Array row and column values to Chess rank and file values
+        :param row: Row coordinate
+        :param col: Col coordinate
+        :return: file, rank for the row, col
+        """
+        chess_file = self.alphabet[col]
+        chess_rank = self.height - row
+
+        return chess_file, chess_rank
+
+
+
+    def copy_board_object(self):
+        """
+        Copies the Board object; this is particularly meant for AI's
+        :return: the Board object
+        """
+        board = Board()
+        board.height = self.height
+        board.width = self.width
+        board.grid = self._copy_grid()
+        # board.history = self.history # This is kind of an expensive operation, imma leave it out for now
+        board.turn_count = self.turn_count
+        board.turn_last_capture = self.turn_last_capture
+        board._has_king = self._has_king
+        board.white_king_position = self.white_king_position
+        board.black_king_position = self.black_king_position
+        return board
+
+
+
     def _copy_grid(self):
         """
-        Creates and returns a copy of the board; called after every move to record board history
+        Creates and returns a copy of Board.grid; called after every move to record board history
         """
         grid = [[SQUARE.Square(r, c) for c in range(self.height)] for r in range(self.width)]
         for r in range(self.width):
@@ -69,7 +102,7 @@ class Board:
             row = chess_file
             col = chess_rank
         else:
-            row, col = self._convert_coordinates(chess_file, chess_rank)
+            row, col = self._convert_to_array_coordinates(chess_file, chess_rank)
         if piece.name == "King":
             self._has_king = True
             try:
@@ -81,6 +114,8 @@ class Board:
                     raise ERROR.UndefinedPieceColor(piece)
             except ERROR.UndefinedPieceColor as e:
                 sys.exit(0)
+        elif piece.name == "Pawn":
+            self.turn_last_capture = -1
         square = self.grid[row][col]
         if square.has_piece():
             self.turn_last_capture = -1
@@ -95,48 +130,64 @@ class Board:
         :param cf1: First Chess File of Move
         :param cr1: First Chess Rank of Move
         :param cf2: Second Chess File of Move
-        :param cr2: First Chess Rank of Move
+        :param cr2: Second Chess Rank of Move
         :return: bool Whether or not the move was valid
         """
-        row1, col1 = self._convert_coordinates(cf1, cr1)
-        row2, col2 = self._convert_coordinates(cf2, cr2)
-        response = self._is_valid_move(color, row1, col1, row2, col2)  # Does not evaluate Check
+        row1, col1 = self._convert_to_array_coordinates(cf1, cr1)
+        row2, col2 = self._convert_to_array_coordinates(cf2, cr2)
+        valid, coordinate = self._is_valid_move(color, row1, col1, row2, col2)  # Does not evaluate Check
 
-        if response["valid"]:
+        if valid:
+            self.execute_valid_move(start_coordinate=[row1, col1], end_coordinate=coordinate)
 
-            previous_grid = self._copy_grid()
+        return valid
 
-            # Grab Squares
-            start_square = self.grid[row1][col1]
-            end_square = self.grid[row2][col2]
 
-            if response['is_queening']:
-                self.set_piece(QUEEN.Queen(color), row2, col2, debug=True)
-            else:
-                self.set_piece(start_square.piece, row2, col2, debug=True)  # TODO: This will need to flag for captured piece when determining draw
-            end_square.piece.update_turn_last_moved(self.turn_count)
-            if response["is_en_passant"]:
-                self.set_piece(PIECE.Piece(), row1, col2, debug=True)
-            start_square.set_piece(PIECE.Piece())
 
-            if response["is_castling"]:
-                if col2 - col1 > 0: # King Side Castle
-                    self.set_piece(self.grid[row2][col2 + 1].piece, row2, col2 - 1, debug=True)
-                    self.grid[row2][col2 - 1].piece.update_turn_last_moved(self.turn_count)
-                    self.set_piece(PIECE.Piece(), row2, col2 + 1, debug=True)
-                else: # Queen Side Castle
-                    self.set_piece(self.grid[row2][col2 - 2].piece, row2, col2 + 1, debug=True)
-                    self.grid[row2][col2 + 1].piece.update_turn_last_moved(self.turn_count)
-                    self.set_piece(PIECE.Piece(), row2, col2 - 2, debug=True)
+    def execute_valid_move(self, start_coordinate, end_coordinate):
+        """
+        should not be called unless move is 100% verified to be valid
+        :param start_coordinate:
+        :param end_coordinate:
+        :return:
+        """
+        row1 = start_coordinate[0]
+        col1 = start_coordinate[1]
+        row2 = end_coordinate[0]
+        col2 = end_coordinate[1]
+        color = self.grid[row1][col1].piece.color
 
-            # Add the previous position to history
-            self.history.append(previous_grid)  # TODO: This will need to be changed later on
+        previous_grid = self._copy_grid()
 
-            # Update Turn Variables
-            self.turn_count += 1
-            self.turn_last_capture += 1
+        # Grab Squares
+        start_square = self.grid[row1][col1]
+        end_square = self.grid[row2][col2]
 
-        return response["valid"]
+        if end_coordinate[-1] == 'is_queening':
+            self.set_piece(QUEEN.Queen(color), row2, col2, debug=True)
+        else:
+            self.set_piece(start_square.piece, row2, col2, debug=True)
+        end_square.piece.update_turn_last_moved(self.turn_count)
+        if end_coordinate[-1] == 'is_en_passant':
+            self.set_piece(PIECE.Piece(), row1, col2, debug=True)
+        start_square.set_piece(PIECE.Piece())
+
+        if end_coordinate[-1] == 'is_castling':
+            if col2 - col1 > 0: # King Side Castle
+                self.set_piece(self.grid[row2][col2 + 1].piece, row2, col2 - 1, debug=True)
+                self.grid[row2][col2 - 1].piece.update_turn_last_moved(self.turn_count)
+                self.set_piece(PIECE.Piece(), row2, col2 + 1, debug=True)
+            else: # Queen Side Castle
+                self.set_piece(self.grid[row2][col2 - 2].piece, row2, col2 + 1, debug=True)
+                self.grid[row2][col2 + 1].piece.update_turn_last_moved(self.turn_count)
+                self.set_piece(PIECE.Piece(), row2, col2 - 2, debug=True)
+
+        # Add the previous position to history
+        self.history.append(previous_grid)
+
+        # Update Turn Variables
+        self.turn_count += 1
+        self.turn_last_capture += 1
 
 
 
@@ -147,27 +198,22 @@ class Board:
         :param row1: First Row Number of Move
         :param col1: First Col Number of Move
         :param row2: Second Row Number of Move
-        :param col2: First Col Number of Move
+        :param col2: Second Col Number of Move
         :return: Returns dictionary with keys: valid, is_castling, is_en_passant, is_queening; values are bool
         """
-        response = dict()
-        response["valid"] = False
-        response["is_castling"] = False
-        response["is_en_passant"] = False
-        response["is_queening"] = False
 
         # Check to see if rows or cols are outside bounds
         if row1 >= self.height or row1 < 0 or row2 >= self.height or row2 < 0:
-            return response
+            return False, []
         if col1 >= self.width or col1 < 0 or col2 >= self.width or col2 < 0:
-            return response
+            return False, []
 
         # Get starting square piece
         start_square_piece = self.grid[row1][col1].piece
 
         # Check to see if selected piece is correct color
         if start_square_piece.color != color:
-            return response
+            return False, []
 
         # Gets all available coordinates for piece
         valid_available_coordinates = self.get_valid_available_coordinates(start_square_piece)
@@ -175,22 +221,10 @@ class Board:
         # Check to see if move is found in the available coordinates
         attack_coordinate = [row2, col2]
         for coordinate in valid_available_coordinates:
-            if len(coordinate) != 2:
-                if coordinate[-1] == 'is_castling':
-                    response["is_castling"] = True
-                if coordinate[-1] == 'is_en_passant':
-                    response["is_en_passant"] = True
-                if coordinate[-1] == 'is_queening':
-                    response["is_queening"] = True
-                coordinate.pop(-1)
-            else:
-                response["is_castling"] = False
-                response["is_en_passant"] = False
-                response["is_queening"] = False
+            if attack_coordinate == coordinate[0:2]:
+                return True, coordinate
 
-            if attack_coordinate == coordinate:
-                response["valid"] = True
-        return response
+        return False, []
 
 
 
@@ -304,23 +338,26 @@ class Board:
         :param color: Color of team that might be in a draw
         :return: bool Whether the team is in a draw or not
         """
-        # stalemate = False
-        # threefold_repetition = False
-        # fifty_move_draw = False
-        # insufficient_material = False
 
+        # insufficient_material = False
+        # TODO: Check for insufficient material
+
+        # fifty_move_draw = False
         if self.turn_last_capture >= 100:
             return True
 
-        # Does the team have any available moves to get out of check?
+        # # threefold_repetition = False
+        # if len(self.history) > 4:
+        #     if self.grid == self.history[-2] == self.history[-4]:
+        #         return True
+
+        # stalemate = False
         for r in range(self.height):
             for c in range(self.width):
                 piece = self.grid[r][c].piece
                 if piece.color == color:
                     if len(self.get_valid_available_coordinates(piece)) > 0:
                         return False
-
-        # No valid available coordinates were found, this is a stalemate
         return True
 
 
