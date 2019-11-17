@@ -26,7 +26,7 @@ import player as PLAYER
 
 class AI_Cnn1(PLAYER.Player):
 
-    def __init__(self, color):
+    def __init__(self, color, model_file_path):
         """
         Initialization for Random AI Object
         """
@@ -34,7 +34,7 @@ class AI_Cnn1(PLAYER.Player):
         self.found_model = True
 
         try:
-            self.model = load_model('../Models/cnn1.h5')
+            self.model = load_model(model_file_path)
             print("Succeeded to load model.\n")
             self.found_model = True
 
