@@ -16,7 +16,7 @@ class Piece():
         self.value = 0
         self.row = 0
         self.col = 0
-        self._turn_last_moved = 0
+        self._turn_last_moved = -1
 
 
 

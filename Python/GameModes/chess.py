@@ -51,7 +51,7 @@ class Chess:
         # self.white_player = AI_CNN1.AI_Cnn1('white', '../Models/cnn2.h5')
         # self.black_player = HUMAN.Human('black')
         # self.black_player = AI_RANDOM.AI_Random('black')
-        self.black_player = AI_CNN1.AI_Cnn1('black', '../Models/cnn2.h5')
+        self.black_player = AI_CNN1.AI_Cnn1('black', '../Models/cnn3.h5')
 
     def begin_game(self):
         """

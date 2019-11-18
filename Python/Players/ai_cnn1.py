@@ -82,6 +82,7 @@ class AI_Cnn1(PLAYER.Player):
                         copy_board = board.copy_board_object()
                         copy_board.execute_valid_move(start_coordinate=[r, c], end_coordinate=end_coordinate)
                         copy_board_data = self.convert_board(self.color, copy_board)
+                        # print(copy_board_data)
                         copy_board_data = np.expand_dims(copy_board_data, axis=0)
                         copy_board_data = np.expand_dims(copy_board_data, axis=2)
 
@@ -110,6 +111,7 @@ class AI_Cnn1(PLAYER.Player):
                     best_end_coordinate = end_coordinate
                     best_evaluation = evaluation
 
+        # print(best_evaluation)
         return best_start_coordinate, best_end_coordinate
 
 
@@ -131,7 +133,7 @@ class AI_Cnn1(PLAYER.Player):
         for r in range(board.height):
             for c in range(board.width):
                 value = board.grid[r][c].piece.value
-                if board.grid[r][c].piece.symbol[1] == 'b':
+                if board.grid[r][c].piece.symbol[0] == 'b':
                     value *= -1
                 board_data.append(value)
 
@@ -142,7 +144,18 @@ class AI_Cnn1(PLAYER.Player):
             board_data.append(-1)
 
         # Converts board's castling potential into either 1 or 0
-        for i in range(4):
+        if board.grid[7][4].piece._turn_last_moved == 0:
+            board_data.append(board.grid[7][7].piece._turn_last_moved == 0)
+            board_data.append(board.grid[7][0].piece._turn_last_moved == 0)
+        else:
+            board_data.append(0)
+            board_data.append(0)
+
+        if board.grid[0][4].piece._turn_last_moved == 0:
+            board_data.append(board.grid[0][7].piece._turn_last_moved == 0)
+            board_data.append(board.grid[0][0].piece._turn_last_moved == 0)
+        else:
+            board_data.append(0)
             board_data.append(0)
 
         # returns normalized board_data containing values between -1 and 1
