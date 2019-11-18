@@ -23,11 +23,10 @@ Update the HTTPExample and the tornado web server to:
 	- send parameters to use in the machine learning models from the phone (e.g., number of neighbors to use in KNN)
 
 <strong>Exceptional Work: 7000 Level Students Choose ONE of the following:</strong>
-
-	- make the training of the model non-blocking to the tornado IOLoop
-	- implement authentication in tornado and in your iOS application
-	- Use CoreML to export your custom trained machine learning model and run the machine learning prediction locally on the iOS app (NOTE: the CoreML model must be exported from the data you create on your HTTPServer)
-	- Also, the CoreML implementation should sufficiently different from the class example.
+- make the training of the model non-blocking to the tornado IOLoop
+- implement authentication in tornado and in your iOS application
+- Use CoreML to export your custom trained machine learning model and run the machine learning prediction locally on the iOS app (NOTE: the CoreML model must be exported from the data you create on your HTTPServer)
+- Also, the CoreML implementation should sufficiently different from the class example.
 
 ### Turn in: 
 
