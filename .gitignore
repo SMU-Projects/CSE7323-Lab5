@@ -32,9 +32,12 @@ xcuserdata/
 Scratch/
 
 # Pycharm folder and files
-Python/.idea/
-Python/__pycache__/
+.idea/
+__pycache__/
 *.pyc
+
+# Jupyter Notebook and Lab
+.ipynb_checkpoints/
 
 ## Mac Specific Files
 .DS_Store
